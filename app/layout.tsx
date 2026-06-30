@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { Barlow, Barlow_Condensed } from "next/font/google";
+import { Barlow, Barlow_Condensed, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { ScrollProgress } from "@/components/ScrollProgress";
 
 const barlow = Barlow({
   variable: "--font-barlow",
@@ -18,25 +19,33 @@ const barlowCondensed = Barlow_Condensed({
   display: "swap",
 });
 
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-mono",
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://gravixstore.cz"),
   title: {
-    default: "GRAVIX — Vybavení pro tvůj trénink",
-    template: "%s — GRAVIX",
+    default: "GRAVIX · Vybavení pro tvůj trénink",
+    template: "%s · GRAVIX",
   },
   description:
-    "GRAVIX. Prémiové fitness vybavení bez kompromisů — trhací pásky, bandáže, shakery a doplňky navržené pro maximální výkon.",
+    "GRAVIX. Prémiové fitness vybavení bez kompromisů. Trhačky, bandáže, shakery, nosní pásky a doplňky navržené pro maximální výkon.",
   keywords: [
     "GRAVIX",
     "fitness vybavení",
-    "trhací pásky",
+    "trhačky",
+    "nosní pásky",
     "lifting straps",
     "zápěstní bandáže",
     "shaker",
     "posilovna",
   ],
   openGraph: {
-    title: "GRAVIX — Vybavení pro tvůj trénink",
+    title: "GRAVIX · Vybavení pro tvůj trénink",
     description:
       "Prémiové fitness vybavení bez kompromisů. Navrženo pro maximální výkon.",
     url: "https://gravixstore.cz",
@@ -54,9 +63,11 @@ export default function RootLayout({
   return (
     <html
       lang="cs"
-      className={`${barlow.variable} ${barlowCondensed.variable} h-full antialiased`}
+      className={`${barlow.variable} ${barlowCondensed.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-ink text-chrome">
+        <div className="grain-overlay" aria-hidden />
+        <ScrollProgress />
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />

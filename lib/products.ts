@@ -29,6 +29,8 @@ export type Product = {
   specs: { label: string; value: string }[];
   inStock: boolean;
   tone: ProductTone;
+  /** Cesta k fotce v /public. Vyměň za reálnou produktovou fotku. */
+  image: string;
 };
 
 export const categories: Category[] = [
@@ -52,17 +54,18 @@ export const categories: Category[] = [
 export const products: Product[] = [
   {
     slug: "lifting-straps",
+    image: "/images/straps.jpg",
     name: "GRAVIX Lifting Straps",
-    subtitle: "Trhací pásky",
+    subtitle: "Trhačky",
     category: "pasky-bandaze",
     price: 349,
     badge: "Bestseller",
     rating: 4.9,
     reviews: 128,
     shortDescription:
-      "Bavlněné trhací pásky s neoprenovou výztuhou. Maximální grip, žádné odřeniny.",
+      "Bavlněné trhačky s neoprenovou výztuhou. Maximální grip, žádné odřeniny.",
     description: [
-      "Když selže úchop, končí série. GRAVIX Lifting Straps to mění — díky vysoce odolné bavlně a protiskluzové vrstvě udržíš činku i v posledním opakování mrtvého tahu.",
+      "Když selže úchop, končí série. GRAVIX Lifting Straps to mění díky vysoce odolné bavlně a protiskluzové vrstvě, takže udržíš činku i v posledním opakování mrtvého tahu.",
       "Neoprenová výplň okolo zápěstí tlumí tlak a zabraňuje odřeninám, takže se můžeš soustředit jen na výkon.",
     ],
     highlights: [
@@ -81,6 +84,7 @@ export const products: Product[] = [
   },
   {
     slug: "wrist-wraps",
+    image: "/images/wraps.jpg",
     name: "GRAVIX Wrist Wraps",
     subtitle: "Zápěstní bandáže",
     category: "pasky-bandaze",
@@ -90,7 +94,7 @@ export const products: Product[] = [
     shortDescription:
       "Tuhé bandáže s palcovou smyčkou. Stabilní zápěstí při tlacích i olympijských zdvizích.",
     description: [
-      "Bench, press nad hlavu, snatch — všude, kde to tlačí na zápěstí, drží GRAVIX Wrist Wraps kloub přesně tam, kde má být.",
+      "Bench, press nad hlavu, snatch. Všude, kde to tlačí na zápěstí, drží GRAVIX Wrist Wraps kloub přesně tam, kde má být.",
       "Široký suchý zip a palcová smyčka umožní rychlé utažení na míru každé sérii.",
     ],
     highlights: [
@@ -101,7 +105,7 @@ export const products: Product[] = [
     specs: [
       { label: "Materiál", value: "Bavlna / elastan" },
       { label: "Délka", value: "50 cm" },
-      { label: "Tuhost", value: "Medium–Stiff" },
+      { label: "Tuhost", value: "Medium / Stiff" },
       { label: "Balení", value: "2 ks (pár)" },
     ],
     inStock: true,
@@ -109,21 +113,22 @@ export const products: Product[] = [
   },
   {
     slug: "figure-8-straps",
+    image: "/images/strongman.jpg",
     name: "GRAVIX Figure 8 Straps",
-    subtitle: "Osmičkové pásky",
+    subtitle: "Osmičkové trhačky",
     category: "pasky-bandaze",
     price: 449,
     badge: "Novinka",
     rating: 4.7,
     reviews: 19,
     shortDescription:
-      "Osmičkové trhací pásky pro strongman a maximální zámek úchopu.",
+      "Osmičkové trhačky pro strongman a maximální zámek úchopu.",
     description: [
       "Pro deadlift, shrugy a strongman disciplíny, kde se počítá každý kilogram. Osmičkový design uzamkne ruku k ose a nepustí.",
       "Vyrobeno z extra silného popruhu se zesílenými stehy.",
     ],
     highlights: [
-      "Osmičkový design — absolutní zámek",
+      "Osmičkový design pro absolutní zámek",
       "Extra silný popruh se zesílenými stehy",
       "3 velikosti (S/M/L)",
     ],
@@ -138,6 +143,7 @@ export const products: Product[] = [
   },
   {
     slug: "shaker-700",
+    image: "/images/shaker.jpg",
     name: "GRAVIX Shaker 700 ml",
     subtitle: "Shaker s míchací pružinou",
     category: "lahve-shakery",
@@ -167,6 +173,7 @@ export const products: Product[] = [
   },
   {
     slug: "magnesium-200",
+    image: "/images/chalk.jpg",
     name: "GRAVIX Magnesium 200 g",
     subtitle: "Práškové magnézium",
     category: "prislusenstvi",
@@ -195,6 +202,7 @@ export const products: Product[] = [
   },
   {
     slug: "lifting-belt",
+    image: "/images/belt.jpg",
     name: "GRAVIX Lifting Belt",
     subtitle: "Vzpěračský opasek",
     category: "prislusenstvi",
@@ -218,10 +226,40 @@ export const products: Product[] = [
       { label: "Materiál", value: "Pravá kůže" },
       { label: "Tloušťka", value: "10 mm" },
       { label: "Šířka", value: "10 cm" },
-      { label: "Velikosti", value: "S–XL" },
+      { label: "Velikosti", value: "S až XL" },
     ],
     inStock: true,
     tone: "carbon",
+  },
+  {
+    slug: "nosni-pasky",
+    image: "/images/nasal.jpg",
+    name: "GRAVIX Nosní pásky",
+    subtitle: "Nosní pásky na dýchání",
+    category: "prislusenstvi",
+    price: 199,
+    badge: "Novinka",
+    rating: 4.7,
+    reviews: 23,
+    shortDescription:
+      "Samolepicí nosní pásky, které otevřou nosní dýchací cesty. Víc kyslíku při tréninku i klidnější spánek.",
+    description: [
+      "Když nos nestíhá, trpí výkon. GRAVIX Nosní pásky jemně rozšíří nosní křídla, takže do plic dostaneš víc vzduchu při dřině i během regenerace.",
+      "Pružný materiál drží po celý trénink a po sundání nezanechá zbytky lepidla.",
+    ],
+    highlights: [
+      "Okamžitě lepší průchodnost nosem",
+      "Drží i při zpocení",
+      "Hypoalergenní lepidlo",
+    ],
+    specs: [
+      { label: "Balení", value: "30 ks" },
+      { label: "Velikost", value: "Universal" },
+      { label: "Materiál", value: "Pružná tkanina" },
+      { label: "Použití", value: "Sport i spánek" },
+    ],
+    inStock: true,
+    tone: "graphite",
   },
 ];
 

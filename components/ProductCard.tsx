@@ -21,6 +21,7 @@ export function ProductCard({ product }: { product: Product }) {
       <div className="relative aspect-[4/5] overflow-hidden">
         <ProductVisual
           tone={product.tone}
+          image={product.image}
           label={product.subtitle}
           className="h-full w-full transition-transform duration-500 ease-out group-hover:scale-[1.04]"
         />
@@ -39,6 +40,8 @@ export function ProductCard({ product }: { product: Product }) {
         <span className="absolute right-3 top-3 grid h-9 w-9 translate-y-1 place-items-center rounded-full bg-ink/70 text-chrome opacity-0 backdrop-blur transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
           <ArrowUpRight className="h-4 w-4" strokeWidth={2} />
         </span>
+
+        <span className="sheen" aria-hidden />
       </div>
 
       {/* body */}
@@ -57,7 +60,7 @@ export function ProductCard({ product }: { product: Product }) {
 
         <div className="mt-5 flex items-end justify-between border-t border-line pt-4">
           <div className="flex items-baseline gap-2">
-            <span className="font-display text-2xl font-bold text-chrome">
+            <span className="font-display text-2xl font-bold text-metal-soft">
               {formatPrice(product.price)}
             </span>
             {product.oldPrice && (

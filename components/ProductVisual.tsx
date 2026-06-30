@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { clsx } from "@/lib/clsx";
 import type { ProductTone } from "@/lib/products";
 import { LogoMark } from "@/components/Logo";
@@ -14,42 +15,46 @@ const tones: Record<ProductTone, string> = {
 };
 
 /**
- * Auto-generated product artwork placeholder.
- * Až budou reálné fotky, nahraď tuhle komponentu <Image />.
+ * Vizuál produktu. Když má produkt fotku (`image`), vykreslí ji
+ * v černobílém ladění; jinak spadne na značkový gradient.
+ * Fotky jsou zatím stock placeholdery — vyměň za reálné produktové.
  */
 export function ProductVisual({
   tone,
-  label,
+  image,
   className,
 }: {
   tone: ProductTone;
-  label: string;
+  label?: string;
+  image?: string;
   className?: string;
 }) {
   return (
     <div
-      className={clsx(
-        "relative overflow-hidden bg-grid isolate",
-        className,
-      )}
-      style={{ backgroundImage: tones[tone] }}
+      className={clsx("relative isolate overflow-hidden bg-card", className)}
       aria-hidden
     >
-      {/* soft top sheen */}
-      <div className="absolute inset-x-0 top-0 h-1/2 bg-radial-glow" />
-      {/* ghost mark */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <LogoMark className="h-32 w-32 opacity-[0.10] blur-[0.5px] [transform:scale(2.6)]" />
-      </div>
-      {/* foreground mark + label */}
-      <div className="relative z-10 flex h-full flex-col items-center justify-center gap-3 px-6 text-center">
-        <LogoMark className="h-12 w-12 drop-shadow-[0_6px_20px_rgba(0,0,0,0.6)]" />
-        <span className="font-display text-sm font-semibold uppercase tracking-[0.3em] text-fog">
-          {label}
-        </span>
-      </div>
-      {/* bottom fade */}
-      <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/40 to-transparent" />
+      {image ? (
+        <Image
+          src={image}
+          alt=""
+          fill
+          sizes="(max-width: 768px) 100vw, 33vw"
+          className="object-cover grayscale contrast-110 brightness-[0.85]"
+        />
+      ) : (
+        <div
+          className="absolute inset-0 bg-grid"
+          style={{ backgroundImage: tones[tone] }}
+        />
+      )}
+
+      {/* vignette + spodní ztmavení */}
+      <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/10 to-ink/25" />
+      <div className="absolute inset-0 bg-grid opacity-10" />
+
+      {/* jemný brand znak */}
+      <LogoMark className="absolute bottom-3.5 left-3.5 h-6 w-6 opacity-70" />
     </div>
   );
 }

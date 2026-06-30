@@ -42,7 +42,7 @@ export function Navbar() {
       )}
     >
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-8">
-        <Link href="/" aria-label="GRAVIX — domů" className="shrink-0">
+        <Link href="/" aria-label="GRAVIX, domů" className="shrink-0">
           <Logo />
         </Link>
 
@@ -64,7 +64,7 @@ export function Navbar() {
         <div className="flex items-center gap-2">
           <button
             type="button"
-            title="Košík — již brzy"
+            title="Košík (již brzy)"
             aria-label="Košík"
             className="relative grid h-10 w-10 cursor-pointer place-items-center rounded-full border border-line text-chrome transition-colors duration-200 hover:border-line-hi hover:bg-card"
           >

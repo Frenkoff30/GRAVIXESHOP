@@ -72,7 +72,7 @@ export function AddToCart({ productName }: { productName: string }) {
             >
               @gravixstore.cz
             </Link>{" "}
-            — ozveme se hned.
+            a ozveme se hned.
           </p>
         </div>
       )}

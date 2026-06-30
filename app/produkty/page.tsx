@@ -6,7 +6,7 @@ import { ProductsBrowser } from "@/components/ProductsBrowser";
 export const metadata: Metadata = {
   title: "Produkty",
   description:
-    "Trhací pásky, zápěstní bandáže, shakery a doplňky GRAVIX. Prémiové fitness vybavení skladem s expedicí do 24 hodin.",
+    "Trhačky, zápěstní bandáže, shakery, nosní pásky a doplňky GRAVIX. Prémiové fitness vybavení skladem s expedicí do 24 hodin.",
 };
 
 export default function ProduktyPage() {

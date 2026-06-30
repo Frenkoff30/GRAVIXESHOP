@@ -78,6 +78,7 @@ export default async function ProductDetail({
           <div className="lg:sticky lg:top-24 lg:self-start">
             <ProductVisual
               tone={product.tone}
+              image={product.image}
               label={product.subtitle}
               className="aspect-square w-full rounded-3xl border border-line"
             />
