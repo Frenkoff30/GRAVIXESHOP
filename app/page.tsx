@@ -142,7 +142,7 @@ export default function Home() {
                   size="lg"
                 >
                   <IconInstagram className="h-5 w-5" />
-                  Sleduj nás na Instagramu
+                  
                 </ButtonLink>
               </div>
             </Reveal>
