@@ -216,6 +216,100 @@ body {
   }
 }
 
+/* Jemné vznášení hero loga */
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-16px);
+  }
+}
+.animate-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+/* Pulzující zelený akcent (tečka v kickeru) */
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 12px var(--color-volt);
+  }
+  50% {
+    opacity: 0.45;
+    box-shadow: 0 0 3px var(--color-volt);
+  }
+}
+.animate-pulse-dot {
+  animation: pulse-dot 2.4s ease-in-out infinite;
+}
+
+/* Pomalu pulzující spotlight za logem */
+@keyframes glow-pulse {
+  0%,
+  100% {
+    opacity: 0.85;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+.animate-glow-pulse {
+  animation: glow-pulse 7s ease-in-out infinite;
+}
+
+/* Zelený dým / mlha kolem loga */
+@keyframes smoke-a {
+  0% {
+    transform: translateY(14%) scale(0.8);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.32;
+  }
+  100% {
+    transform: translateY(-46%) scale(1.5);
+    opacity: 0;
+  }
+}
+@keyframes smoke-b {
+  0% {
+    transform: translateY(16%) scale(0.7);
+    opacity: 0;
+  }
+  35% {
+    opacity: 0.24;
+  }
+  100% {
+    transform: translateY(-40%) scale(1.35);
+    opacity: 0;
+  }
+}
+@keyframes fog-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.25;
+  }
+  50% {
+    transform: translateY(-6%) scale(1.16);
+    opacity: 0.45;
+  }
+}
+.animate-smoke-a {
+  animation: smoke-a 7s ease-in-out infinite;
+}
+.animate-smoke-b {
+  animation: smoke-b 9s ease-in-out 1.6s infinite;
+}
+.animate-fog-breathe {
+  animation: fog-breathe 6s ease-in-out infinite;
+}
+
 /* Lesklý přejezd (sheen) přes karty při hoveru */
 .sheen {
   position: absolute;

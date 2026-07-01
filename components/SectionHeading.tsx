@@ -4,6 +4,7 @@ import { clsx } from "@/lib/clsx";
 export function SectionHeading({
   eyebrow,
   title,
+  index,
   align = "left",
   light = false,
   className,
@@ -11,44 +12,68 @@ export function SectionHeading({
 }: {
   eyebrow?: string;
   title: ReactNode;
+  /** volitelný editorial index vpravo, např. „01 — 04" */
+  index?: string;
   align?: "left" | "center";
   light?: boolean;
   className?: string;
   children?: ReactNode;
 }) {
+  const center = align === "center";
+
   return (
     <div
       className={clsx(
-        align === "center" ? "text-center mx-auto max-w-2xl" : "text-left",
+        center ? "mx-auto max-w-3xl text-center" : "text-left",
         className,
       )}
     >
+      {/* editorial eyebrow řádek s hairline linkou */}
       {eyebrow && (
-        <span
+        <div
           className={clsx(
-            "inline-flex items-center gap-2 font-display text-xs font-semibold uppercase tracking-[0.3em]",
-            light ? "text-zinc-500" : "text-fog",
-            align === "center" && "justify-center",
+            "flex items-center gap-4",
+            center && "justify-center",
           )}
         >
           <span
-            className={clsx("h-px w-6", light ? "bg-zinc-300" : "bg-line-hi")}
-          />
-          {eyebrow}
-        </span>
+            className={clsx(
+              "tech-label whitespace-nowrap",
+              light ? "text-zinc-500" : "text-volt",
+            )}
+          >
+            {eyebrow}
+          </span>
+          {!center && (
+            <span
+              className={clsx(
+                "h-px flex-1",
+                light ? "bg-zinc-200" : "bg-line",
+              )}
+            />
+          )}
+          {index && !center && (
+            <span className="tech-label whitespace-nowrap text-mist">
+              {index}
+            </span>
+          )}
+        </div>
       )}
+
       <h2
         className={clsx(
-          "mt-4 font-display text-4xl font-bold uppercase leading-[0.95] tracking-tight sm:text-5xl",
+          "mt-5 font-display font-bold uppercase leading-[0.9] tracking-tight text-[clamp(2.25rem,5vw,4rem)]",
           light ? "text-zinc-950" : "text-chrome",
         )}
       >
         {title}
       </h2>
+
       {children && (
         <p
           className={clsx(
-            "mt-4 max-w-xl text-base leading-relaxed",
+            "mt-5 max-w-xl text-base leading-relaxed",
+            center && "mx-auto",
             light ? "text-zinc-600" : "text-fog",
           )}
         >
