@@ -7,6 +7,7 @@ import {
   ShieldCheck,
   Undo2,
   Headphones,
+  Quote,
 } from "lucide-react";
 import { ButtonLink } from "@/components/Button";
 import { Reveal } from "@/components/Reveal";
@@ -14,7 +15,9 @@ import { Marquee } from "@/components/Marquee";
 import { SectionHeading } from "@/components/SectionHeading";
 import { ProductCard } from "@/components/ProductCard";
 import { Counter } from "@/components/Counter";
+import { Stars } from "@/components/Stars";
 import { products, categories, productsByCategory } from "@/lib/products";
+import { clsx } from "@/lib/clsx";
 
 const featured = products.filter((p) => p.badge).slice(0, 3);
 
@@ -47,6 +50,27 @@ const usps = [
   },
 ];
 
+const reviews = [
+  {
+    name: "Tomáš K.",
+    role: "Powerlifting",
+    rating: 5,
+    text: "Trhačky drží jak beton. Konečně mrtvý tah bez toho, aby mi ujížděla osa z ruky. Kvalita znát na první dotek.",
+  },
+  {
+    name: "Denis M.",
+    role: "CrossFit",
+    rating: 5,
+    text: "Bandáže i shaker top kvalita za super cenu. Objednal večer, další den to bylo v schránce. Klobouk dolů.",
+  },
+  {
+    name: "Lukáš V.",
+    role: "Bodybuilding",
+    rating: 5,
+    text: "Opasek z pravé kůže je pecka, sedí perfektně a vypadá jako od velkýho brandu, ne jako levárna z tržnice.",
+  },
+];
+
 const marqueeItems = [
   "Doprava zdarma od 1 000 Kč",
   "Expedice do 24 hodin",
@@ -63,28 +87,36 @@ export default function Home() {
     <>
       {/* ============ HERO ============ */}
       <section className="relative flex min-h-[100svh] items-end overflow-hidden">
-        <Image
-          src="/images/hero.jpg"
-          alt="Sportovec při mrtvém tahu"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-center photo-grade"
-        />
-        {/* overlays pro čitelnost */}
+        {/* cinematický obraz s pomalým nájezdem */}
+        <div className="absolute inset-0 animate-hero-zoom">
+          <Image
+            src="/images/hero.jpg"
+            alt="Sportovec při mrtvém tahu"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center photo-grade"
+          />
+        </div>
+        {/* overlays pro čitelnost + hloubka */}
         <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/55 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-ink/95 via-transparent to-ink/35" />
+        <div className="absolute inset-0 bg-[radial-gradient(48%_42%_at_62%_42%,rgba(255,255,255,0.08),transparent_70%)]" />
         <div className="absolute inset-0 bg-grid opacity-15" />
 
         {/* technické rohové značky */}
         <span className="pointer-events-none absolute left-5 top-24 h-6 w-6 border-l border-t border-white/20 sm:left-8" />
         <span className="pointer-events-none absolute right-5 top-24 h-6 w-6 border-r border-t border-white/20 sm:right-8" />
-        <span className="pointer-events-none absolute bottom-6 right-5 h-6 w-6 border-b border-r border-white/20 sm:right-8" />
 
         {/* horní technický popisek */}
         <div className="pointer-events-none absolute left-5 top-24 hidden items-center gap-3 sm:left-8 md:flex">
           <span className="tech-label text-mist">[ GRAVIX / EQUIPMENT ]</span>
         </div>
+
+        {/* vertikální editorial popisek u pravého kraje */}
+        <span className="tech-label pointer-events-none absolute right-6 top-1/2 hidden -translate-y-1/2 text-mist [writing-mode:vertical-rl] lg:block">
+          EST. 2026 · Czech made
+        </span>
 
         <div className="relative z-10 mx-auto w-full max-w-7xl px-5 pb-20 pt-32 sm:px-8 sm:pb-28">
           <Reveal>
@@ -122,8 +154,18 @@ export default function Home() {
             </div>
           </Reveal>
 
-          <Reveal delay={0.32}>
-            <dl className="mt-14 flex flex-wrap gap-x-12 gap-y-6">
+          <Reveal delay={0.28}>
+            <div className="mt-6 inline-flex items-center gap-3 rounded-full border border-line bg-card/50 px-4 py-2 backdrop-blur">
+              <Stars rating={4.9} />
+              <span className="text-sm text-fog">
+                <span className="font-semibold text-chrome">4,9 / 5</span> ·
+                doporučují zákazníci
+              </span>
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.34}>
+            <dl className="mt-8 flex flex-wrap gap-x-12 gap-y-6">
               {[
                 { to: 24, suffix: " h", l: "Expedice ze skladu" },
                 { to: 300, suffix: "+ kg", l: "Nosnost trhaček" },
@@ -139,49 +181,108 @@ export default function Home() {
             </dl>
           </Reveal>
         </div>
+
+        {/* scroll indikátor */}
+        <div className="pointer-events-none absolute bottom-7 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 md:flex">
+          <span className="tech-label text-mist">Scroll</span>
+          <span className="h-10 w-px animate-scroll-cue bg-gradient-to-b from-chrome to-transparent" />
+        </div>
       </section>
 
       {/* ============ MARQUEE ============ */}
       <Marquee items={marqueeItems} />
 
-      {/* ============ USP (tmavá sekce) ============ */}
-      <section className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-28">
+      {/* ============ 01 · KATEGORIE (bento) ============ */}
+      <section
+        id="kategorie"
+        className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-28"
+      >
         <Reveal>
-          <span className="tech-label flex items-center gap-2 text-fog">
-            <span className="h-px w-6 bg-line-hi" />
-            Proč GRAVIX
-          </span>
+          <SectionHeading
+            eyebrow="// 01 / Kategorie"
+            title={
+              <>
+                Najdi své <span className="text-metal">vybavení</span>
+              </>
+            }
+          >
+            Vyber si, kde chceš přidat. Od gripu přes hydrataci až po detaily,
+            co dělají rozdíl.
+          </SectionHeading>
         </Reveal>
 
-        <div className="mt-8 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
-          {usps.map((u, i) => (
-            <Reveal key={u.title} delay={i * 0.06} className="h-full">
-              <div className="group relative flex h-full flex-col gap-5 bg-surface p-7 transition-colors duration-300 hover:bg-card">
-                <span className="tech-label absolute right-5 top-5 text-mist">
-                  0{i + 1}
-                </span>
-                <span className="grid h-12 w-12 place-items-center rounded-xl border border-line-hi bg-card text-chrome transition-colors duration-300 group-hover:border-chrome">
-                  <u.icon className="h-5 w-5" strokeWidth={1.75} />
-                </span>
-                <div>
-                  <h3 className="font-display text-lg font-semibold uppercase tracking-wide text-chrome">
-                    {u.title}
-                  </h3>
-                  <p className="mt-1.5 text-sm leading-relaxed text-fog">
-                    {u.text}
-                  </p>
-                </div>
-              </div>
-            </Reveal>
-          ))}
+        <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5 lg:h-[600px] lg:grid-cols-3 lg:grid-rows-2">
+          {categories.map((c, i) => {
+            const count = productsByCategory(c.slug).length;
+            const big = i === 0;
+            return (
+              <Reveal
+                key={c.slug}
+                delay={i * 0.08}
+                className={clsx(
+                  "h-full",
+                  big && "md:col-span-2 lg:col-span-2 lg:row-span-2",
+                )}
+              >
+                <Link
+                  href={`/produkty?kategorie=${c.slug}`}
+                  className={clsx(
+                    "group relative flex h-full cursor-pointer flex-col justify-end overflow-hidden rounded-2xl border border-line transition-all duration-300 hover:border-line-hi hover:shadow-[var(--shadow-glow)]",
+                    big ? "min-h-[20rem]" : "min-h-[15rem]",
+                  )}
+                >
+                  <Image
+                    src={catImages[c.slug]}
+                    alt={c.name}
+                    fill
+                    sizes={big ? "(max-width: 1024px) 100vw, 66vw" : "(max-width: 1024px) 100vw, 33vw"}
+                    className="object-cover grayscale contrast-110 brightness-90 transition-all duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0 group-hover:brightness-100"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/50 to-ink/5" />
+                  <div className="absolute inset-0 bg-grid opacity-20" />
+
+                  <span className="tech-label absolute left-6 top-6 text-chrome/70">
+                    0{i + 1} / 0{categories.length}
+                  </span>
+
+                  <div className="relative p-6 sm:p-7">
+                    <span className="tech-label text-mist">
+                      {count}{" "}
+                      {count === 1
+                        ? "produkt"
+                        : count < 5
+                          ? "produkty"
+                          : "produktů"}
+                    </span>
+                    <h3
+                      className={clsx(
+                        "mt-2 font-display font-bold uppercase tracking-tight text-chrome",
+                        big ? "text-4xl sm:text-5xl" : "text-2xl sm:text-3xl",
+                      )}
+                    >
+                      {c.name}
+                    </h3>
+                    <div className="mt-3 flex items-center justify-between gap-4">
+                      <p className="max-w-[18rem] text-sm leading-relaxed text-fog">
+                        {c.tagline}
+                      </p>
+                      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-line-hi bg-ink/60 text-chrome backdrop-blur transition-all duration-300 group-hover:bg-chrome group-hover:text-ink">
+                        <ArrowUpRight className="h-5 w-5" strokeWidth={2} />
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              </Reveal>
+            );
+          })}
         </div>
       </section>
 
-      {/* ============ FEATURED PRODUCTS (tmavá sekce) ============ */}
-      <section className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-28">
+      {/* ============ 02 · BESTSELLERY ============ */}
+      <section className="mx-auto max-w-7xl px-5 pb-20 sm:px-8 sm:pb-28">
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-6">
-            <SectionHeading eyebrow="// 01 / Vybráno pro tebe" title="Bestsellery">
+            <SectionHeading eyebrow="// 02 / Vybráno pro tebe" title="Bestsellery">
               Kousky, které u nás letí nejvíc. Osvědčené v gymu i v soutěži.
             </SectionHeading>
             <ButtonLink href="/produkty" variant="ghost" className="shrink-0">
@@ -197,66 +298,6 @@ export default function Home() {
               <ProductCard product={p} />
             </Reveal>
           ))}
-        </div>
-      </section>
-
-      {/* ============ CATEGORIES (foto karty) ============ */}
-      <section id="kategorie" className="mx-auto max-w-7xl px-5 pb-20 sm:px-8 sm:pb-28">
-        <Reveal>
-          <SectionHeading
-            eyebrow="// 02 / Kategorie"
-            title={
-              <>
-                Najdi své <span className="text-metal">vybavení</span>
-              </>
-            }
-          />
-        </Reveal>
-
-        <div className="mt-12 grid gap-5 md:grid-cols-3">
-          {categories.map((c, i) => {
-            const count = productsByCategory(c.slug).length;
-            return (
-              <Reveal key={c.slug} delay={i * 0.08} className="h-full">
-                <Link
-                  href={`/produkty?kategorie=${c.slug}`}
-                  className="group relative flex h-full min-h-[22rem] cursor-pointer flex-col justify-end overflow-hidden rounded-2xl border border-line transition-all duration-300 hover:border-line-hi hover:shadow-[var(--shadow-glow)]"
-                >
-                  <Image
-                    src={catImages[c.slug]}
-                    alt={c.name}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover grayscale contrast-110 brightness-90 transition-all duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0 group-hover:brightness-100"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/10" />
-                  <div className="absolute inset-0 bg-grid opacity-20" />
-
-                  <span className="tech-label absolute left-6 top-6 text-chrome/70">
-                    0{i + 1} / 0{categories.length}
-                  </span>
-
-                  <div className="relative p-6">
-                    <span className="tech-label text-mist">
-                      {count}{" "}
-                      {count === 1 ? "produkt" : count < 5 ? "produkty" : "produktů"}
-                    </span>
-                    <h3 className="mt-2 font-display text-3xl font-bold uppercase tracking-tight text-chrome">
-                      {c.name}
-                    </h3>
-                    <div className="mt-3 flex items-center justify-between gap-4">
-                      <p className="max-w-[16rem] text-sm leading-relaxed text-fog">
-                        {c.tagline}
-                      </p>
-                      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-line-hi bg-ink/60 text-chrome backdrop-blur transition-all duration-300 group-hover:bg-chrome group-hover:text-ink">
-                        <ArrowUpRight className="h-5 w-5" strokeWidth={2} />
-                      </span>
-                    </div>
-                  </div>
-                </Link>
-              </Reveal>
-            );
-          })}
         </div>
       </section>
 
@@ -306,16 +347,97 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ============ BRAND (slogan + editorial galerie) ============ */}
+      {/* ============ 03 · PROČ GRAVIX (USP) ============ */}
+      <section className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-28">
+        <Reveal>
+          <SectionHeading
+            eyebrow="// 03 / Proč GRAVIX"
+            title={
+              <>
+                Bez <span className="text-metal">kompromisů</span>
+              </>
+            }
+          />
+        </Reveal>
+
+        <div className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+          {usps.map((u, i) => (
+            <Reveal key={u.title} delay={i * 0.06} className="h-full">
+              <div className="group relative flex h-full flex-col gap-5 bg-surface p-7 transition-colors duration-300 hover:bg-card">
+                <span className="tech-label absolute right-5 top-5 text-mist">
+                  0{i + 1}
+                </span>
+                <span className="grid h-12 w-12 place-items-center rounded-xl border border-line-hi bg-card text-chrome transition-colors duration-300 group-hover:border-chrome">
+                  <u.icon className="h-5 w-5" strokeWidth={1.75} />
+                </span>
+                <div>
+                  <h3 className="font-display text-lg font-semibold uppercase tracking-wide text-chrome">
+                    {u.title}
+                  </h3>
+                  <p className="mt-1.5 text-sm leading-relaxed text-fog">
+                    {u.text}
+                  </p>
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* ============ 04 · RECENZE ============ */}
+      <section className="mx-auto max-w-7xl px-5 pb-20 sm:px-8 sm:pb-28">
+        <Reveal>
+          <SectionHeading
+            eyebrow="// 04 / Recenze"
+            title={
+              <>
+                Co říkají <span className="text-metal">v gymu</span>
+              </>
+            }
+          >
+            Skutečné vybavení, skutečné výsledky. Tohle říkají lidi, co s GRAVIXem
+            trénují.
+          </SectionHeading>
+        </Reveal>
+
+        <div className="mt-12 grid gap-6 md:grid-cols-3">
+          {reviews.map((r, i) => (
+            <Reveal key={r.name} delay={i * 0.08} className="h-full">
+              <figure className="flex h-full flex-col gap-5 rounded-2xl border border-line bg-surface p-7 transition-colors duration-300 hover:border-line-hi">
+                <div className="flex items-center justify-between">
+                  <Stars rating={r.rating} />
+                  <Quote className="h-6 w-6 text-line-hi" strokeWidth={1.5} />
+                </div>
+                <blockquote className="flex-1 text-base leading-relaxed text-chrome">
+                  „{r.text}“
+                </blockquote>
+                <figcaption className="flex items-center gap-3 border-t border-line pt-5">
+                  <span className="grid h-10 w-10 place-items-center rounded-full surface-metal font-display text-sm font-bold text-ink">
+                    {r.name.charAt(0)}
+                  </span>
+                  <div>
+                    <div className="font-display text-sm font-semibold uppercase tracking-wide text-chrome">
+                      {r.name}
+                    </div>
+                    <div className="tech-label text-mist">{r.role}</div>
+                  </div>
+                </figcaption>
+              </figure>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* ============ 05 · ZNAČKA (slogan + editorial galerie) ============ */}
       <section
         id="znacka"
-        className="relative overflow-hidden border-b border-line bg-surface"
+        className="relative overflow-hidden border-y border-line bg-surface"
       >
         <div className="absolute inset-0 bg-grid opacity-30" />
 
         <div className="relative mx-auto max-w-4xl px-5 py-24 text-center sm:px-8 sm:py-32">
           <Reveal>
-            <span className="tech-label text-fog">// 03 / Naše značka</span>
+            <span className="tech-label text-fog">// 05 / Naše značka</span>
           </Reveal>
           <Reveal delay={0.08}>
             <p className="mt-6 font-display text-3xl font-semibold uppercase leading-tight tracking-tight text-chrome sm:text-5xl">
