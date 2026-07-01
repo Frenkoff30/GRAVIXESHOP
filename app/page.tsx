@@ -8,18 +8,28 @@ import {
   Undo2,
   Headphones,
   Quote,
+  Check,
 } from "lucide-react";
 import { ButtonLink } from "@/components/Button";
 import { Reveal } from "@/components/Reveal";
 import { Marquee } from "@/components/Marquee";
+import { KineticBand } from "@/components/KineticBand";
 import { SectionHeading } from "@/components/SectionHeading";
 import { ProductCard } from "@/components/ProductCard";
+import { ProductVisual } from "@/components/ProductVisual";
+import { LogoMark } from "@/components/Logo";
 import { Counter } from "@/components/Counter";
 import { Stars } from "@/components/Stars";
-import { products, categories, productsByCategory } from "@/lib/products";
+import {
+  products,
+  categories,
+  productsByCategory,
+  formatPrice,
+} from "@/lib/products";
 import { clsx } from "@/lib/clsx";
 
 const featured = products.filter((p) => p.badge).slice(0, 3);
+const spotlight = featured[0];
 
 const catImages: Record<string, string> = {
   "pasky-bandaze": "/images/grip-straps.jpg",
@@ -101,7 +111,7 @@ export default function Home() {
         {/* overlays pro čitelnost + hloubka */}
         <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/55 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-ink/95 via-transparent to-ink/35" />
-        <div className="absolute inset-0 bg-[radial-gradient(48%_42%_at_62%_42%,rgba(255,255,255,0.08),transparent_70%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(50%_45%_at_62%_42%,rgba(224,30,40,0.16),transparent_70%)]" />
         <div className="absolute inset-0 bg-grid opacity-15" />
 
         {/* technické rohové značky */}
@@ -121,7 +131,7 @@ export default function Home() {
         <div className="relative z-10 mx-auto w-full max-w-7xl px-5 pb-20 pt-32 sm:px-8 sm:pb-28">
           <Reveal>
             <span className="inline-flex items-center gap-2 rounded-full border border-line bg-card/60 px-4 py-1.5 font-display text-xs font-semibold uppercase tracking-[0.28em] text-fog backdrop-blur">
-              <span className="h-1.5 w-1.5 rounded-full bg-chrome" />
+              <span className="h-1.5 w-1.5 rounded-full bg-blood shadow-[0_0_8px_var(--color-blood)]" />
               Nová éra tréninkového vybavení
             </span>
           </Reveal>
@@ -130,7 +140,7 @@ export default function Home() {
             <h1 className="mt-6 max-w-4xl font-display text-6xl font-bold uppercase leading-[0.86] tracking-tight sm:text-7xl lg:text-[7.5rem]">
               <span className="text-metal">Vybavení,</span>
               <br />
-              <span className="text-metal">co nepovolí.</span>
+              <span className="text-flame">co nepovolí.</span>
             </h1>
           </Reveal>
 
@@ -185,7 +195,7 @@ export default function Home() {
         {/* scroll indikátor */}
         <div className="pointer-events-none absolute bottom-7 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 md:flex">
           <span className="tech-label text-mist">Scroll</span>
-          <span className="h-10 w-px animate-scroll-cue bg-gradient-to-b from-chrome to-transparent" />
+          <span className="h-10 w-px animate-scroll-cue bg-gradient-to-b from-blood to-transparent" />
         </div>
       </section>
 
@@ -202,7 +212,7 @@ export default function Home() {
             eyebrow="// 01 / Kategorie"
             title={
               <>
-                Najdi své <span className="text-metal">vybavení</span>
+                Najdi své <span className="text-flame">vybavení</span>
               </>
             }
           >
@@ -236,7 +246,7 @@ export default function Home() {
                     alt={c.name}
                     fill
                     sizes={big ? "(max-width: 1024px) 100vw, 66vw" : "(max-width: 1024px) 100vw, 33vw"}
-                    className="object-cover grayscale contrast-110 brightness-90 transition-all duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0 group-hover:brightness-100"
+                    className="object-cover photo-grade reveal-color transition-transform duration-700 ease-out group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/50 to-ink/5" />
                   <div className="absolute inset-0 bg-grid opacity-20" />
@@ -301,6 +311,66 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ============ KINETICKÝ PÁS ============ */}
+      <KineticBand word="GRAVIX" />
+
+      {/* ============ SPOTLIGHT PRODUKTU ============ */}
+      <section className="relative overflow-hidden border-b border-line bg-surface">
+        <div className="absolute inset-0 bg-grid opacity-20" />
+        <div className="relative mx-auto grid max-w-7xl items-stretch lg:grid-cols-2">
+          {/* obraz — na hover se rozzáří do barvy */}
+          <div className="group relative min-h-[24rem] overflow-hidden lg:min-h-[40rem]">
+            <ProductVisual
+              tone={spotlight.tone}
+              image={spotlight.image}
+              className="h-full w-full"
+            />
+          </div>
+
+          {/* obsah */}
+          <div className="relative flex flex-col justify-center px-6 py-16 sm:px-10 lg:px-14 lg:py-20">
+            <span className="pointer-events-none absolute right-4 top-8 hidden select-none font-display text-[7rem] font-bold uppercase leading-none text-outline sm:block sm:text-[10rem]">
+              01
+            </span>
+            <Reveal>
+              <span className="tech-label text-fog">
+                // Spotlight / Bestseller #1
+              </span>
+              <h2 className="mt-4 font-display text-5xl font-bold uppercase leading-[0.88] tracking-tight text-metal sm:text-6xl">
+                {spotlight.name.replace("GRAVIX ", "")}
+              </h2>
+              <p className="mt-3 text-lg text-fog">{spotlight.subtitle}</p>
+              <p className="mt-6 max-w-md text-base leading-relaxed text-fog">
+                {spotlight.shortDescription}
+              </p>
+              <ul className="mt-6 space-y-2.5">
+                {spotlight.highlights.map((h) => (
+                  <li
+                    key={h}
+                    className="flex items-start gap-3 text-sm text-chrome"
+                  >
+                    <Check
+                      className="mt-0.5 h-4 w-4 shrink-0 text-chrome"
+                      strokeWidth={2.5}
+                    />
+                    {h}
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-9 flex flex-wrap items-center gap-6">
+                <span className="font-display text-4xl font-bold text-metal-soft">
+                  {formatPrice(spotlight.price)}
+                </span>
+                <ButtonLink href={`/produkty/${spotlight.slug}`} size="lg">
+                  Koupit teď
+                  <ArrowRight className="h-5 w-5" strokeWidth={2} />
+                </ButtonLink>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
       {/* ============ INDUSTRIÁLNÍ PRUH ============ */}
       <section className="relative overflow-hidden border-y border-line">
         <Image
@@ -319,7 +389,7 @@ export default function Home() {
             <span className="tech-label text-mist">// Made for the grind</span>
             <h2 className="mt-5 max-w-2xl font-display text-4xl font-bold uppercase leading-[0.95] tracking-tight text-chrome sm:text-6xl">
               Postaveno na{" "}
-              <span className="text-metal">poslední opakování.</span>
+              <span className="text-flame">poslední opakování.</span>
             </h2>
             <p className="mt-6 max-w-lg text-lg leading-relaxed text-fog">
               Každý kus vybavení testujeme tam, kde to bolí. V dřepu, v tahu,
@@ -354,7 +424,7 @@ export default function Home() {
             eyebrow="// 03 / Proč GRAVIX"
             title={
               <>
-                Bez <span className="text-metal">kompromisů</span>
+                Bez <span className="text-flame">kompromisů</span>
               </>
             }
           />
@@ -391,7 +461,7 @@ export default function Home() {
             eyebrow="// 04 / Recenze"
             title={
               <>
-                Co říkají <span className="text-metal">v gymu</span>
+                Co říkají <span className="text-flame">v gymu</span>
               </>
             }
           >
@@ -437,6 +507,11 @@ export default function Home() {
 
         <div className="relative mx-auto max-w-4xl px-5 py-24 text-center sm:px-8 sm:py-32">
           <Reveal>
+            <div className="mb-8 flex justify-center">
+              <LogoMark className="h-20 w-20" />
+            </div>
+          </Reveal>
+          <Reveal>
             <span className="tech-label text-fog">// 05 / Naše značka</span>
           </Reveal>
           <Reveal delay={0.08}>
@@ -444,7 +519,7 @@ export default function Home() {
               Nezačali jsme proto, abychom prodávali{" "}
               <span className="text-metal">další levný plast.</span> Začali
               jsme, protože jsme sami chtěli vybavení, které{" "}
-              <span className="text-metal">nezklame v poslední sérii.</span>
+              <span className="text-flame">nezklame v poslední sérii.</span>
             </p>
           </Reveal>
           <Reveal delay={0.16}>
@@ -470,7 +545,7 @@ export default function Home() {
                   alt={img.alt}
                   fill
                   sizes="(max-width: 768px) 33vw, 30vw"
-                  className="object-cover grayscale contrast-110 brightness-90 transition-all duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0 group-hover:brightness-100"
+                  className="object-cover photo-grade reveal-color transition-transform duration-700 ease-out group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-ink/60 to-transparent" />
               </div>
@@ -518,7 +593,7 @@ export default function Home() {
                 />
                 <button
                   type="submit"
-                  className="inline-flex h-14 cursor-pointer items-center justify-center gap-2 rounded-full bg-chrome px-8 font-display text-base font-semibold uppercase tracking-[0.16em] text-ink transition-all duration-200 hover:bg-white hover:shadow-[0_10px_30px_-10px_rgba(255,255,255,0.45)]"
+                  className="inline-flex h-14 cursor-pointer items-center justify-center gap-2 rounded-full bg-blood px-8 font-display text-base font-semibold uppercase tracking-[0.16em] text-white transition-all duration-200 hover:bg-blood-bright hover:shadow-[var(--shadow-blood)]"
                 >
                   Odebírat
                 </button>

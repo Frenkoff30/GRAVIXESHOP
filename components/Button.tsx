@@ -10,10 +10,10 @@ const base =
 
 const variants: Record<Variant, string> = {
   primary:
-    "bg-chrome text-ink hover:bg-white hover:shadow-[0_10px_30px_-10px_rgba(255,255,255,0.45)]",
+    "bg-blood text-white hover:bg-blood-bright hover:shadow-[var(--shadow-blood)]",
   outline:
-    "border border-line-hi text-chrome hover:border-chrome hover:bg-card",
-  ghost: "text-fog hover:text-chrome",
+    "border border-line-hi text-chrome hover:border-blood hover:bg-blood/10",
+  ghost: "text-fog hover:text-blood",
 };
 
 const sizes: Record<Size, string> = {

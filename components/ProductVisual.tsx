@@ -40,7 +40,7 @@ export function ProductVisual({
           alt=""
           fill
           sizes="(max-width: 768px) 100vw, 33vw"
-          className="object-cover grayscale contrast-110 brightness-[0.85]"
+          className="object-cover photo-grade reveal-color"
         />
       ) : (
         <div

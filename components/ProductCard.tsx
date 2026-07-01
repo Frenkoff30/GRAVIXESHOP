@@ -6,16 +6,16 @@ import { Stars } from "@/components/Stars";
 import { clsx } from "@/lib/clsx";
 
 const badgeStyles: Record<string, string> = {
-  Bestseller: "bg-chrome text-ink",
+  Bestseller: "bg-blood text-white",
   Novinka: "bg-card-hi text-chrome border border-line-hi",
-  Limitka: "bg-transparent text-chrome border border-chrome",
+  Limitka: "bg-transparent text-blood border border-blood",
 };
 
 export function ProductCard({ product }: { product: Product }) {
   return (
     <Link
       href={`/produkty/${product.slug}`}
-      className="group relative flex cursor-pointer flex-col overflow-hidden rounded-2xl border border-line bg-card transition-all duration-300 hover:border-line-hi hover:shadow-[var(--shadow-glow)]"
+      className="group relative flex cursor-pointer flex-col overflow-hidden rounded-2xl border border-line bg-card transition-all duration-300 hover:-translate-y-1 hover:border-line-hi hover:shadow-[var(--shadow-glow)]"
     >
       {/* visual */}
       <div className="relative aspect-[4/5] overflow-hidden">

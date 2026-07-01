@@ -55,7 +55,7 @@ export function Navbar() {
                 className="group relative font-display text-sm font-semibold uppercase tracking-[0.18em] text-fog transition-colors duration-200 hover:text-chrome"
               >
                 {l.label}
-                <span className="absolute -bottom-1.5 left-0 h-px w-0 bg-chrome transition-all duration-300 group-hover:w-full" />
+                <span className="absolute -bottom-1.5 left-0 h-px w-0 bg-blood transition-all duration-300 group-hover:w-full" />
               </Link>
             </li>
           ))}
@@ -69,7 +69,7 @@ export function Navbar() {
             className="relative grid h-10 w-10 cursor-pointer place-items-center rounded-full border border-line text-chrome transition-colors duration-200 hover:border-line-hi hover:bg-card"
           >
             <ShoppingBag className="h-[18px] w-[18px]" strokeWidth={1.75} />
-            <span className="absolute -right-1 -top-1 grid h-4 min-w-4 place-items-center rounded-full bg-chrome px-1 text-[10px] font-bold leading-none text-ink">
+            <span className="absolute -right-1 -top-1 grid h-4 min-w-4 place-items-center rounded-full bg-blood px-1 text-[10px] font-bold leading-none text-white">
               0
             </span>
           </button>

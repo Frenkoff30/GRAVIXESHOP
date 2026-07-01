@@ -30,7 +30,7 @@ export function Marquee({
             </span>
             <svg
               viewBox="0 0 10 10"
-              className="h-2.5 w-2.5 shrink-0 text-line-hi"
+              className="h-2.5 w-2.5 shrink-0 text-blood"
               aria-hidden
             >
               <path d="M5 0 6.2 3.8 10 5 6.2 6.2 5 10 3.8 6.2 0 5 3.8 3.8Z" fill="currentColor" />
