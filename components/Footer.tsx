@@ -44,14 +44,14 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GRAVIX na Instagramu"
-                className="grid h-10 w-10 cursor-pointer place-items-center rounded-full border border-line text-chrome transition-colors duration-200 hover:border-line-hi hover:bg-card"
+                className="grid h-10 w-10 cursor-pointer place-items-center rounded-full border border-line text-chrome transition-colors duration-200 hover:border-volt hover:text-volt"
               >
                 <IconInstagram className="h-[18px] w-[18px]" />
               </Link>
               <Link
                 href="mailto:info@gravixstore.cz"
                 aria-label="Napiš nám e-mail"
-                className="grid h-10 w-10 cursor-pointer place-items-center rounded-full border border-line text-chrome transition-colors duration-200 hover:border-line-hi hover:bg-card"
+                className="grid h-10 w-10 cursor-pointer place-items-center rounded-full border border-line text-chrome transition-colors duration-200 hover:border-volt hover:text-volt"
               >
                 <Mail className="h-[18px] w-[18px]" strokeWidth={1.75} />
               </Link>

@@ -52,7 +52,7 @@ export default async function ProductDetail({
     <div className="relative">
       <div className="absolute inset-x-0 top-0 h-72 bg-radial-glow" />
 
-      <div className="relative mx-auto max-w-7xl px-5 pt-28 sm:px-8 sm:pt-36">
+      <div className="relative mx-auto max-w-7xl px-5 pt-10 sm:px-8 sm:pt-14">
         {/* breadcrumb */}
         <nav
           className="flex flex-wrap items-center gap-1.5 text-sm text-mist"
@@ -136,7 +136,7 @@ export default async function ProductDetail({
             <ul className="mt-6 space-y-2.5">
               {product.highlights.map((h) => (
                 <li key={h} className="flex items-start gap-3 text-sm text-chrome">
-                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-chrome" strokeWidth={2.5} />
+                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-volt" strokeWidth={2.5} />
                   {h}
                 </li>
               ))}

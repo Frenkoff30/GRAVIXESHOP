@@ -15,10 +15,9 @@ import { Reveal } from "@/components/Reveal";
 import { Marquee } from "@/components/Marquee";
 import { KineticBand } from "@/components/KineticBand";
 import { SectionHeading } from "@/components/SectionHeading";
-import { ProductCard } from "@/components/ProductCard";
 import { ProductVisual } from "@/components/ProductVisual";
 import { LogoMark } from "@/components/Logo";
-import { Counter } from "@/components/Counter";
+import { IconInstagram } from "@/components/IconInstagram";
 import { Stars } from "@/components/Stars";
 import {
   products,
@@ -28,13 +27,12 @@ import {
 } from "@/lib/products";
 import { clsx } from "@/lib/clsx";
 
-const featured = products.filter((p) => p.badge).slice(0, 3);
-const spotlight = featured[0];
+const spotlight =
+  products.find((p) => p.slug === "nasal-strips") ?? products[0];
 
 const catImages: Record<string, string> = {
-  "pasky-bandaze": "/images/grip-straps.jpg",
-  "lahve-shakery": "/images/curl.jpg",
-  prislusenstvi: "/images/dumbbell-grip.jpg",
+  shakery: "/images/shaker.jpg",
+  dychani: "/images/nasal.jpg",
 };
 
 const usps = [
@@ -63,32 +61,30 @@ const usps = [
 const reviews = [
   {
     name: "Tomáš K.",
-    role: "Powerlifting",
+    role: "Fitness",
     rating: 5,
-    text: "Trhačky drží jak beton. Konečně mrtvý tah bez toho, aby mi ujížděla osa z ruky. Kvalita znát na první dotek.",
+    text: "Pro Shaker je pecka, těsní i v batohu a pružina nikdy nezaseká. Konečně žádný proteinový nepořádek v tašce.",
   },
   {
     name: "Denis M.",
     role: "CrossFit",
     rating: 5,
-    text: "Bandáže i shaker top kvalita za super cenu. Objednal večer, další den to bylo v schránce. Klobouk dolů.",
+    text: "Nosní pásky mi fakt pomáhají s dýcháním při kondičce. Drží, i když se zpotím. Rozhodně doporučuju.",
   },
   {
     name: "Lukáš V.",
-    role: "Bodybuilding",
+    role: "Kulturistika",
     rating: 5,
-    text: "Opasek z pravé kůže je pecka, sedí perfektně a vypadá jako od velkýho brandu, ne jako levárna z tržnice.",
+    text: "Classic Shaker za super cenu, kvalita jako od velkýho brandu. Objednal večer, druhý den doma. Paráda.",
   },
 ];
 
 const marqueeItems = [
   "Doprava zdarma od 1 000 Kč",
   "Expedice do 24 hodin",
-  "Trhačky",
-  "Bandáže",
   "Shakery",
   "Nosní pásky",
-  "Doplňky do gymu",
+  "Bez BPA",
   "Navrženo pro výkon",
 ];
 
@@ -96,111 +92,105 @@ export default function Home() {
   return (
     <>
       {/* ============ HERO ============ */}
-      <section className="relative flex min-h-[100svh] items-end overflow-hidden">
-        {/* cinematický obraz s pomalým nájezdem */}
-        <div className="absolute inset-0 animate-hero-zoom">
-          <Image
-            src="/images/hero.jpg"
-            alt="Sportovec při mrtvém tahu"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-center photo-grade"
-          />
-        </div>
-        {/* overlays pro čitelnost + hloubka */}
-        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/55 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/95 via-transparent to-ink/35" />
-        <div className="absolute inset-0 bg-[radial-gradient(50%_45%_at_62%_42%,rgba(224,30,40,0.16),transparent_70%)]" />
+      <section className="relative flex min-h-[calc(100svh-5.5rem)] items-center overflow-hidden bg-ink">
+        {/* pozadí — jen hloubka (tmavá + zelený nádech + mřížka) */}
+        <div className="absolute inset-0 bg-[radial-gradient(58%_55%_at_78%_48%,rgba(169,224,52,0.13),transparent_72%)]" />
         <div className="absolute inset-0 bg-grid opacity-15" />
 
-        {/* technické rohové značky */}
-        <span className="pointer-events-none absolute left-5 top-24 h-6 w-6 border-l border-t border-white/20 sm:left-8" />
-        <span className="pointer-events-none absolute right-5 top-24 h-6 w-6 border-r border-t border-white/20 sm:right-8" />
-
-        {/* horní technický popisek */}
-        <div className="pointer-events-none absolute left-5 top-24 hidden items-center gap-3 sm:left-8 md:flex">
-          <span className="tech-label text-mist">[ GRAVIX / EQUIPMENT ]</span>
-        </div>
-
-        {/* vertikální editorial popisek u pravého kraje */}
-        <span className="tech-label pointer-events-none absolute right-6 top-1/2 hidden -translate-y-1/2 text-mist [writing-mode:vertical-rl] lg:block">
-          EST. 2026 · Czech made
-        </span>
-
-        <div className="relative z-10 mx-auto w-full max-w-7xl px-5 pb-20 pt-32 sm:px-8 sm:pb-28">
-          <Reveal>
-            <span className="inline-flex items-center gap-2 rounded-full border border-line bg-card/60 px-4 py-1.5 font-display text-xs font-semibold uppercase tracking-[0.28em] text-fog backdrop-blur">
-              <span className="h-1.5 w-1.5 rounded-full bg-blood shadow-[0_0_8px_var(--color-blood)]" />
-              Nová éra tréninkového vybavení
-            </span>
+        <div className="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-10 px-5 py-16 sm:px-8 lg:grid-cols-[1fr_1.15fr] lg:gap-6">
+          {/* velké ostré logo — na mobilu nahoře, na desktopu vpravo */}
+          <Reveal className="order-1 flex justify-center lg:order-2 lg:justify-end">
+            <Image
+              src="/images/gravix-logo.png"
+              alt="GRAVIX"
+              width={664}
+              height={572}
+              priority
+              sizes="(max-width: 1024px) 70vw, 600px"
+              className="animate-hero-zoom w-full max-w-[300px] object-contain drop-shadow-[0_0_60px_rgba(169,224,52,0.25)] sm:max-w-[420px] lg:max-w-[600px]"
+            />
           </Reveal>
 
-          <Reveal delay={0.08}>
-            <h1 className="mt-6 max-w-4xl font-display text-6xl font-bold uppercase leading-[0.86] tracking-tight sm:text-7xl lg:text-[7.5rem]">
-              <span className="text-metal">Vybavení,</span>
-              <br />
-              <span className="text-flame">co nepovolí.</span>
-            </h1>
-          </Reveal>
+          {/* text */}
+          <div className="order-2 text-center lg:order-1 lg:text-left">
+            <Reveal delay={0.08}>
+              <h1 className="font-display text-5xl font-bold uppercase leading-[0.86] tracking-tight sm:text-6xl lg:text-[5rem]">
+                <span className="text-metal">Vybavení,</span>
+                <br />
+                <span className="text-flame">co nepovolí.</span>
+              </h1>
+            </Reveal>
 
-          <Reveal delay={0.16}>
-            <p className="mt-7 max-w-xl text-lg leading-relaxed text-fog">
-              Trhačky, bandáže, shakery a doplňky do gymu pro lidi, co od
-              tréninku čekají maximum. Žádné kompromisy, jen čistý výkon
-              a vybavení, které vydrží.
-            </p>
-          </Reveal>
+            <Reveal delay={0.16}>
+              <p className="mx-auto mt-7 max-w-xl text-lg leading-relaxed text-fog lg:mx-0">
+                Shakery a nosní pásky pro lidi, co od tréninku čekají maximum.
+                Žádné kompromisy, jen čistý výkon a vybavení, které vydrží.
+              </p>
+            </Reveal>
 
-          <Reveal delay={0.24}>
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink href="/produkty" size="lg">
-                Prozkoumat produkty
-                <ArrowRight className="h-5 w-5" strokeWidth={2} />
-              </ButtonLink>
-              <ButtonLink href="/#znacka" variant="outline" size="lg">
-                Naše značka
-              </ButtonLink>
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.28}>
-            <div className="mt-6 inline-flex items-center gap-3 rounded-full border border-line bg-card/50 px-4 py-2 backdrop-blur">
-              <Stars rating={4.9} />
-              <span className="text-sm text-fog">
-                <span className="font-semibold text-chrome">4,9 / 5</span> ·
-                doporučují zákazníci
-              </span>
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.34}>
-            <dl className="mt-8 flex flex-wrap gap-x-12 gap-y-6">
-              {[
-                { to: 24, suffix: " h", l: "Expedice ze skladu" },
-                { to: 300, suffix: "+ kg", l: "Nosnost trhaček" },
-                { to: 30, suffix: " dní", l: "Garance vrácení" },
-              ].map((s) => (
-                <div key={s.l}>
-                  <dt className="font-display text-3xl font-bold text-metal-soft">
-                    <Counter to={s.to} suffix={s.suffix} />
-                  </dt>
-                  <dd className="tech-label mt-1 text-mist">{s.l}</dd>
-                </div>
-              ))}
-            </dl>
-          </Reveal>
+            <Reveal delay={0.24}>
+              <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row lg:justify-start">
+                <ButtonLink href="/produkty" size="lg">
+                  Prozkoumat produkty
+                  <ArrowRight className="h-5 w-5" strokeWidth={2} />
+                </ButtonLink>
+                <ButtonLink
+                  href="https://www.instagram.com/gravixstore.cz/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="outline"
+                  size="lg"
+                >
+                  <IconInstagram className="h-5 w-5" />
+                  Sleduj nás na Instagramu
+                </ButtonLink>
+              </div>
+            </Reveal>
+          </div>
         </div>
 
         {/* scroll indikátor */}
         <div className="pointer-events-none absolute bottom-7 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 md:flex">
           <span className="tech-label text-mist">Scroll</span>
-          <span className="h-10 w-px animate-scroll-cue bg-gradient-to-b from-blood to-transparent" />
+          <span className="h-10 w-px animate-scroll-cue bg-gradient-to-b from-volt to-transparent" />
         </div>
       </section>
 
       {/* ============ MARQUEE ============ */}
       <Marquee items={marqueeItems} />
+
+      {/* ============ ZNAČKA — slogan (nahoře) ============ */}
+      <section
+        id="znacka"
+        className="relative overflow-hidden border-b border-line bg-surface"
+      >
+        <div className="absolute inset-0 bg-grid opacity-30" />
+        <div className="relative mx-auto max-w-4xl px-5 py-20 text-center sm:px-8 sm:py-28">
+          <Reveal>
+            <div className="mb-8 flex justify-center">
+              <LogoMark className="h-20 w-20" />
+            </div>
+          </Reveal>
+          <Reveal>
+            <span className="tech-label text-fog">// Naše značka</span>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <p className="mt-6 text-balance font-display text-3xl font-semibold uppercase leading-tight tracking-tight text-chrome sm:text-5xl">
+              Nezačali jsme proto, abychom prodávali{" "}
+              <span className="text-metal">další levný plast.</span> Začali
+              jsme, protože jsme sami chtěli vybavení, které{" "}
+              <span className="text-flame">nezklame v&nbsp;poslední&nbsp;sérii.</span>
+            </p>
+          </Reveal>
+          <Reveal delay={0.16}>
+            <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-fog">
+              GRAVIX je česká značka pro lidi, kteří berou trénink vážně. Každý
+              produkt vybíráme a testujeme tak, aby vydržel přesně to, co od něj
+              čekáš, a vypadal přitom líp než cokoliv v regále.
+            </p>
+          </Reveal>
+        </div>
+      </section>
 
       {/* ============ 01 · KATEGORIE (bento) ============ */}
       <section
@@ -221,31 +211,20 @@ export default function Home() {
           </SectionHeading>
         </Reveal>
 
-        <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5 lg:h-[600px] lg:grid-cols-3 lg:grid-rows-2">
+        <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2">
           {categories.map((c, i) => {
             const count = productsByCategory(c.slug).length;
-            const big = i === 0;
             return (
-              <Reveal
-                key={c.slug}
-                delay={i * 0.08}
-                className={clsx(
-                  "h-full",
-                  big && "md:col-span-2 lg:col-span-2 lg:row-span-2",
-                )}
-              >
+              <Reveal key={c.slug} delay={i * 0.08} className="h-full">
                 <Link
                   href={`/produkty?kategorie=${c.slug}`}
-                  className={clsx(
-                    "group relative flex h-full cursor-pointer flex-col justify-end overflow-hidden rounded-2xl border border-line transition-all duration-300 hover:border-line-hi hover:shadow-[var(--shadow-glow)]",
-                    big ? "min-h-[20rem]" : "min-h-[15rem]",
-                  )}
+                  className="group relative flex h-full min-h-[22rem] cursor-pointer flex-col justify-end overflow-hidden rounded-2xl border border-line transition-all duration-300 hover:border-volt/45 hover:shadow-[var(--shadow-glow)]"
                 >
                   <Image
                     src={catImages[c.slug]}
                     alt={c.name}
                     fill
-                    sizes={big ? "(max-width: 1024px) 100vw, 66vw" : "(max-width: 1024px) 100vw, 33vw"}
+                    sizes="(max-width: 640px) 100vw, 50vw"
                     className="object-cover photo-grade reveal-color transition-transform duration-700 ease-out group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/50 to-ink/5" />
@@ -264,19 +243,14 @@ export default function Home() {
                           ? "produkty"
                           : "produktů"}
                     </span>
-                    <h3
-                      className={clsx(
-                        "mt-2 font-display font-bold uppercase tracking-tight text-chrome",
-                        big ? "text-4xl sm:text-5xl" : "text-2xl sm:text-3xl",
-                      )}
-                    >
+                    <h3 className="mt-2 font-display text-3xl font-bold uppercase tracking-tight text-chrome sm:text-4xl">
                       {c.name}
                     </h3>
                     <div className="mt-3 flex items-center justify-between gap-4">
                       <p className="max-w-[18rem] text-sm leading-relaxed text-fog">
                         {c.tagline}
                       </p>
-                      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-line-hi bg-ink/60 text-chrome backdrop-blur transition-all duration-300 group-hover:bg-chrome group-hover:text-ink">
+                      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-line-hi bg-ink/60 text-chrome backdrop-blur transition-all duration-300 group-hover:border-volt group-hover:bg-volt group-hover:text-ink">
                         <ArrowUpRight className="h-5 w-5" strokeWidth={2} />
                       </span>
                     </div>
@@ -285,29 +259,6 @@ export default function Home() {
               </Reveal>
             );
           })}
-        </div>
-      </section>
-
-      {/* ============ 02 · BESTSELLERY ============ */}
-      <section className="mx-auto max-w-7xl px-5 pb-20 sm:px-8 sm:pb-28">
-        <Reveal>
-          <div className="flex flex-wrap items-end justify-between gap-6">
-            <SectionHeading eyebrow="// 02 / Vybráno pro tebe" title="Bestsellery">
-              Kousky, které u nás letí nejvíc. Osvědčené v gymu i v soutěži.
-            </SectionHeading>
-            <ButtonLink href="/produkty" variant="ghost" className="shrink-0">
-              Zobrazit vše
-              <ArrowRight className="h-4 w-4" strokeWidth={2} />
-            </ButtonLink>
-          </div>
-        </Reveal>
-
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {featured.map((p, i) => (
-            <Reveal key={p.slug} delay={i * 0.08}>
-              <ProductCard product={p} />
-            </Reveal>
-          ))}
         </div>
       </section>
 
@@ -334,7 +285,7 @@ export default function Home() {
             </span>
             <Reveal>
               <span className="tech-label text-fog">
-                // Spotlight / Bestseller #1
+                // Spotlight / Novinka
               </span>
               <h2 className="mt-4 font-display text-5xl font-bold uppercase leading-[0.88] tracking-tight text-metal sm:text-6xl">
                 {spotlight.name.replace("GRAVIX ", "")}
@@ -350,7 +301,7 @@ export default function Home() {
                     className="flex items-start gap-3 text-sm text-chrome"
                   >
                     <Check
-                      className="mt-0.5 h-4 w-4 shrink-0 text-chrome"
+                      className="mt-0.5 h-4 w-4 shrink-0 text-volt"
                       strokeWidth={2.5}
                     />
                     {h}
@@ -371,57 +322,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ============ INDUSTRIÁLNÍ PRUH ============ */}
-      <section className="relative overflow-hidden border-y border-line">
-        <Image
-          src="/images/ropes-concrete.jpg"
-          alt="Trénink s lany"
-          fill
-          sizes="100vw"
-          className="object-cover object-center photo-grade"
-        />
-        <div className="absolute inset-0 bg-ink/70" />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/50 to-transparent" />
-        <div className="absolute inset-0 bg-grid opacity-20" />
-
-        <div className="relative mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-32">
-          <Reveal>
-            <span className="tech-label text-mist">// Made for the grind</span>
-            <h2 className="mt-5 max-w-2xl font-display text-4xl font-bold uppercase leading-[0.95] tracking-tight text-chrome sm:text-6xl">
-              Postaveno na{" "}
-              <span className="text-flame">poslední opakování.</span>
-            </h2>
-            <p className="mt-6 max-w-lg text-lg leading-relaxed text-fog">
-              Každý kus vybavení testujeme tam, kde to bolí. V dřepu, v tahu,
-              v posledních centimetrech rozsahu. Co projde u nás, projde
-              i u tebe.
-            </p>
-          </Reveal>
-
-          <Reveal delay={0.15}>
-            <dl className="mt-12 grid max-w-2xl grid-cols-3 gap-6 border-t border-line/70 pt-8">
-              {[
-                { to: 100, suffix: " %", l: "Testováno v gymu" },
-                { to: 24, suffix: " h", l: "Expedice" },
-                { to: 30, suffix: " dní", l: "Na vrácení" },
-              ].map((s) => (
-                <div key={s.l}>
-                  <dt className="font-display text-3xl font-bold text-metal-soft sm:text-4xl">
-                    <Counter to={s.to} suffix={s.suffix} />
-                  </dt>
-                  <dd className="tech-label mt-1 text-mist">{s.l}</dd>
-                </div>
-              ))}
-            </dl>
-          </Reveal>
-        </div>
-      </section>
-
       {/* ============ 03 · PROČ GRAVIX (USP) ============ */}
       <section className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-28">
         <Reveal>
           <SectionHeading
-            eyebrow="// 03 / Proč GRAVIX"
+            eyebrow="// 02 / Proč GRAVIX"
             title={
               <>
                 Bez <span className="text-flame">kompromisů</span>
@@ -437,7 +342,7 @@ export default function Home() {
                 <span className="tech-label absolute right-5 top-5 text-mist">
                   0{i + 1}
                 </span>
-                <span className="grid h-12 w-12 place-items-center rounded-xl border border-line-hi bg-card text-chrome transition-colors duration-300 group-hover:border-chrome">
+                <span className="grid h-12 w-12 place-items-center rounded-xl border border-line-hi bg-card text-chrome transition-colors duration-300 group-hover:border-volt group-hover:text-volt">
                   <u.icon className="h-5 w-5" strokeWidth={1.75} />
                 </span>
                 <div>
@@ -458,7 +363,7 @@ export default function Home() {
       <section className="mx-auto max-w-7xl px-5 pb-20 sm:px-8 sm:pb-28">
         <Reveal>
           <SectionHeading
-            eyebrow="// 04 / Recenze"
+            eyebrow="// 03 / Recenze"
             title={
               <>
                 Co říkají <span className="text-flame">v gymu</span>
@@ -498,48 +403,39 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ============ 05 · ZNAČKA (slogan + editorial galerie) ============ */}
-      <section
-        id="znacka"
-        className="relative overflow-hidden border-y border-line bg-surface"
-      >
+      {/* ============ FOTOGALERIE + CTA (po recenzích) ============ */}
+      <section className="relative overflow-hidden border-y border-line bg-surface">
         <div className="absolute inset-0 bg-grid opacity-30" />
 
-        <div className="relative mx-auto max-w-4xl px-5 py-24 text-center sm:px-8 sm:py-32">
+        <div className="relative mx-auto max-w-7xl px-5 pt-20 sm:px-8 sm:pt-28">
           <Reveal>
-            <div className="mb-8 flex justify-center">
-              <LogoMark className="h-20 w-20" />
-            </div>
-          </Reveal>
-          <Reveal>
-            <span className="tech-label text-fog">// 05 / Naše značka</span>
-          </Reveal>
-          <Reveal delay={0.08}>
-            <p className="mt-6 font-display text-3xl font-semibold uppercase leading-tight tracking-tight text-chrome sm:text-5xl">
-              Nezačali jsme proto, abychom prodávali{" "}
-              <span className="text-metal">další levný plast.</span> Začali
-              jsme, protože jsme sami chtěli vybavení, které{" "}
-              <span className="text-flame">nezklame v poslední sérii.</span>
-            </p>
-          </Reveal>
-          <Reveal delay={0.16}>
-            <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-fog">
-              GRAVIX je česká značka pro lidi, kteří berou trénink vážně. Každý
-              produkt vybíráme a testujeme tak, aby vydržel přesně to, co od něj
-              čekáš, a vypadal přitom líp než cokoliv v regále.
-            </p>
+            <SectionHeading
+              eyebrow="// Galerie"
+              align="center"
+              title={
+                <>
+                  Foto<span className="text-flame">galerie</span>
+                </>
+              }
+            >
+              GRAVIX v akci. Skutečný trénink, skutečná dřina.
+            </SectionHeading>
           </Reveal>
         </div>
 
         {/* editorial galerie */}
-        <div className="relative mx-auto grid max-w-7xl grid-cols-3 gap-2 px-2 pb-2 sm:gap-3 sm:px-3 sm:pb-3">
+        <div className="relative mx-auto mt-12 grid max-w-7xl grid-cols-3 gap-2 px-2 sm:gap-3 sm:px-3">
           {[
-            { src: "/images/grip-straps.jpg", alt: "Úchop činky" },
-            { src: "/images/pullup-bw.jpg", alt: "Shyby" },
-            { src: "/images/dumbbell-grip.jpg", alt: "Trénink s jednoručkami" },
+            { src: "/images/grip-straps.jpg", alt: "Úchop činky", label: "Grip & tah" },
+            { src: "/images/pullup-bw.jpg", alt: "Shyby", label: "Kalistenika" },
+            {
+              src: "/images/dumbbell-grip.jpg",
+              alt: "Trénink s jednoručkami",
+              label: "Jednoručky",
+            },
           ].map((img, i) => (
             <Reveal key={img.src} delay={i * 0.1}>
-              <div className="group relative aspect-[3/4] overflow-hidden rounded-xl border border-line sm:aspect-[4/5]">
+              <div className="group relative aspect-[3/4] overflow-hidden rounded-xl border border-line transition-colors duration-300 hover:border-volt/60 sm:aspect-[4/5]">
                 <Image
                   src={img.src}
                   alt={img.alt}
@@ -547,7 +443,11 @@ export default function Home() {
                   sizes="(max-width: 768px) 33vw, 30vw"
                   className="object-cover photo-grade reveal-color transition-transform duration-700 ease-out group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-ink/60 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/75 via-transparent to-transparent" />
+                <span className="absolute bottom-4 left-4 flex translate-y-2 items-center gap-2 font-display text-sm font-semibold uppercase tracking-[0.16em] text-chrome opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                  <span className="h-1.5 w-1.5 rounded-full bg-volt shadow-[0_0_8px_var(--color-volt)]" />
+                  {img.label}
+                </span>
               </div>
             </Reveal>
           ))}
@@ -589,11 +489,11 @@ export default function Home() {
                   type="email"
                   required
                   placeholder="tvuj@email.cz"
-                  className="h-14 flex-1 rounded-full border border-line-hi bg-ink px-6 text-base text-chrome placeholder:text-mist transition-colors duration-200 focus:border-chrome focus:outline-none"
+                  className="h-14 flex-1 rounded-full border border-line-hi bg-ink px-6 text-base text-chrome placeholder:text-mist transition-colors duration-200 focus:border-volt focus:outline-none focus:ring-4 focus:ring-volt/20"
                 />
                 <button
                   type="submit"
-                  className="inline-flex h-14 cursor-pointer items-center justify-center gap-2 rounded-full bg-blood px-8 font-display text-base font-semibold uppercase tracking-[0.16em] text-white transition-all duration-200 hover:bg-blood-bright hover:shadow-[var(--shadow-blood)]"
+                  className="inline-flex h-14 cursor-pointer items-center justify-center gap-2 rounded-full bg-volt px-8 font-display text-base font-semibold uppercase tracking-[0.16em] text-ink transition-all duration-200 hover:bg-volt-bright hover:shadow-[var(--shadow-volt)]"
                 >
                   Odebírat
                 </button>

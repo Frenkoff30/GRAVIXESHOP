@@ -40,7 +40,7 @@ export function AddToCart({ productName }: { productName: string }) {
         <button
           type="button"
           onClick={() => setAdded(true)}
-          className="inline-flex h-14 flex-1 cursor-pointer items-center justify-center gap-2.5 rounded-full bg-blood px-8 font-display text-base font-semibold uppercase tracking-[0.16em] text-white transition-all duration-200 hover:bg-blood-bright hover:shadow-[var(--shadow-blood)]"
+          className="inline-flex h-14 flex-1 cursor-pointer items-center justify-center gap-2.5 rounded-full bg-volt px-8 font-display text-base font-semibold uppercase tracking-[0.16em] text-ink transition-all duration-200 hover:bg-volt-bright hover:shadow-[var(--shadow-volt)]"
         >
           {added ? (
             <>

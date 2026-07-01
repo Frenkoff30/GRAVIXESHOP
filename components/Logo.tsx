@@ -2,39 +2,35 @@ import Image from "next/image";
 import { clsx } from "@/lib/clsx";
 
 /**
- * Znak GRAVIX vysazený v kartáčované stříbrné minci.
+ * Samotný znak „G" z loga GRAVIX (kov + zelená).
+ * Průhledné pozadí, funguje na světlém i tmavém.
  * Velikost se řídí přes className (h-* w-*).
  */
 export function LogoMark({ className }: { className?: string }) {
   return (
-    <span
-      className={clsx(
-        "relative inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full coin-silver ring-1 ring-black/25 shadow-[inset_0_1px_2px_rgba(255,255,255,0.7),inset_0_-2px_5px_rgba(0,0,0,0.28),0_2px_10px_rgba(0,0,0,0.45)]",
-        className,
-      )}
-    >
-      <Image
-        src="/images/gravix-mark.png"
-        alt="GRAVIX"
-        width={1513}
-        height={1023}
-        className="h-auto w-[58%]"
-      />
-    </span>
+    <Image
+      src="/images/gravix-mark.png"
+      alt="GRAVIX"
+      width={481}
+      height={406}
+      className={clsx("h-8 w-auto object-contain", className)}
+    />
   );
 }
 
 /**
- * Plné logo GRAVIX (znak + wordmark s červeným X). Pro tmavé pozadí.
+ * Plné logo GRAVIX — znak „G" nahoře, nápis GRAVIX pod ním.
+ * Průhledné pozadí, čitelné na bílé liště i na tmavém patičce.
  */
 export function Logo({ className }: { className?: string }) {
   return (
     <Image
       src="/images/gravix-logo.png"
       alt="GRAVIX"
-      width={1523}
-      height={1023}
-      className={clsx("h-8 w-auto", className)}
+      width={664}
+      height={572}
+      priority
+      className={clsx("h-14 w-auto object-contain", className)}
     />
   );
 }

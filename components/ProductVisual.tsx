@@ -16,7 +16,7 @@ const tones: Record<ProductTone, string> = {
 
 /**
  * Vizuál produktu. Když má produkt fotku (`image`), vykreslí ji
- * v černobílém ladění; jinak spadne na značkový gradient.
+ * rovnou plně barevnou; jinak spadne na značkový gradient.
  * Fotky jsou zatím stock placeholdery — vyměň za reálné produktové.
  */
 export function ProductVisual({
@@ -49,12 +49,11 @@ export function ProductVisual({
         />
       )}
 
-      {/* vignette + spodní ztmavení */}
-      <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/10 to-ink/25" />
-      <div className="absolute inset-0 bg-grid opacity-10" />
+      {/* jen jemné spodní ztmavení kvůli čitelnosti badge/loga */}
+      <div className="absolute inset-0 bg-gradient-to-t from-ink/45 via-transparent to-transparent" />
 
       {/* jemný brand znak */}
-      <LogoMark className="absolute bottom-3.5 left-3.5 h-6 w-6 opacity-70" />
+      <LogoMark className="absolute bottom-3 left-3 h-7 w-7 opacity-80 drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]" />
     </div>
   );
 }

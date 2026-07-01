@@ -2,11 +2,11 @@
 
 /* ============================================================
    GRAVIX — Design Tokens
-   Dark premium metallic. Black graphite base, chrome accents.
+   Černý grafitový základ, bílý/stříbrný text, zelený akcent.
    ============================================================ */
 @theme {
-  --color-ink: #101014;
-  --color-surface: #17171c;
+  --color-ink: #0e0e11;
+  --color-surface: #16161a;
   --color-card: #1e1e25;
   --color-card-hi: #27272f;
   --color-line: #313139;
@@ -15,16 +15,17 @@
   --color-mist: #7a7a85;
   --color-chrome: #f2f2f6;
 
-  --color-blood: #e01e28;
-  --color-blood-bright: #ff3b40;
-  --color-blood-deep: #7c0d13;
+  /* Zelený akcent (podle loga — lime / chartreuse) */
+  --color-volt: #a9e034;
+  --color-volt-bright: #c6f75a;
+  --color-volt-deep: #4d7c1f;
 
   --font-display: var(--font-barlow-condensed), "Arial Narrow", system-ui, sans-serif;
   --font-body: var(--font-barlow), system-ui, sans-serif;
 
   --shadow-card: 0 18px 40px -22px rgba(0, 0, 0, 0.85);
   --shadow-glow: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 24px 60px -28px rgba(0, 0, 0, 0.9);
-  --shadow-blood: 0 12px 40px -10px rgba(224, 30, 40, 0.5);
+  --shadow-volt: 0 12px 40px -10px rgba(169, 224, 52, 0.45);
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -43,7 +44,8 @@ body {
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  overflow-x: hidden;
+  /* clip (ne hidden) — ořízne vodorovný přesah, ale nerozbije sticky lištu */
+  overflow-x: clip;
 }
 
 ::selection {
@@ -146,7 +148,7 @@ body {
 .bg-radial-glow {
   background: radial-gradient(
     60% 50% at 50% 0%,
-    rgba(224, 30, 40, 0.16) 0%,
+    rgba(169, 224, 52, 0.14) 0%,
     rgba(8, 8, 10, 0) 70%
   );
 }
@@ -258,28 +260,28 @@ body {
 .grain-overlay {
   position: fixed;
   inset: 0;
-  z-index: 60;
+  z-index: 40;
   pointer-events: none;
   opacity: 0.045;
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* Červený duotone fotek (viz SVG filtr #gx-duotone v layoutu) */
+/* Fotky jsou rovnou plně barevné — jen jemné dokreslení kontrastu */
 .photo-grade {
-  filter: url(#gx-duotone);
+  filter: saturate(1.06) contrast(1.03);
 }
 .photo-grade-soft {
-  filter: url(#gx-duotone) brightness(1.08);
+  filter: saturate(1.06) contrast(1.03) brightness(1.05);
 }
-/* Na hover (nad prvkem s .group) se fotka rozzáří do plné barvy */
+/* Na hover fotka jemně ožije (víc sytosti) */
 .group:hover .reveal-color {
-  filter: none;
+  filter: saturate(1.18) contrast(1.05);
 }
 
-/* Ohnivý červený gradient pro akcenty v textu */
+/* Zelený gradient pro akcenty v textu */
 .text-flame {
-  background: linear-gradient(180deg, #ff5a4d 0%, #e01e28 52%, #9d0f16 100%);
+  background: linear-gradient(180deg, #d4f56a 0%, #a9e034 50%, #5f8f1c 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

@@ -6,16 +6,16 @@ import { Stars } from "@/components/Stars";
 import { clsx } from "@/lib/clsx";
 
 const badgeStyles: Record<string, string> = {
-  Bestseller: "bg-blood text-white",
+  Bestseller: "bg-volt text-ink",
   Novinka: "bg-card-hi text-chrome border border-line-hi",
-  Limitka: "bg-transparent text-blood border border-blood",
+  Limitka: "bg-transparent text-volt border border-volt",
 };
 
 export function ProductCard({ product }: { product: Product }) {
   return (
     <Link
       href={`/produkty/${product.slug}`}
-      className="group relative flex cursor-pointer flex-col overflow-hidden rounded-2xl border border-line bg-card transition-all duration-300 hover:-translate-y-1 hover:border-line-hi hover:shadow-[var(--shadow-glow)]"
+      className="group relative flex cursor-pointer flex-col overflow-hidden rounded-2xl border border-line bg-card transition-all duration-300 hover:-translate-y-1 hover:border-volt/45 hover:shadow-[var(--shadow-glow)]"
     >
       {/* visual */}
       <div className="relative aspect-[4/5] overflow-hidden">
@@ -69,8 +69,9 @@ export function ProductCard({ product }: { product: Product }) {
               </span>
             )}
           </div>
-          <span className="font-display text-sm font-semibold uppercase tracking-[0.16em] text-fog transition-colors duration-200 group-hover:text-chrome">
+          <span className="flex items-center gap-1 font-display text-sm font-semibold uppercase tracking-[0.16em] text-fog transition-colors duration-200 group-hover:text-volt">
             Detail
+            <ArrowUpRight className="h-4 w-4" strokeWidth={2} />
           </span>
         </div>
       </div>

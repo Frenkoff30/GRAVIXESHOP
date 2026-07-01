@@ -14,7 +14,7 @@ export function ScrollProgress() {
   return (
     <motion.div
       style={{ scaleX }}
-      className="fixed inset-x-0 top-0 z-[70] h-0.5 origin-left bg-gradient-to-r from-transparent via-chrome to-transparent"
+      className="fixed inset-x-0 top-0 z-[70] h-0.5 origin-left bg-gradient-to-r from-volt/40 via-volt to-volt/40"
       aria-hidden
     />
   );

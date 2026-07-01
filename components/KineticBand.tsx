@@ -26,7 +26,7 @@ export function KineticBand({
             key={i}
             className={clsx(
               "font-display text-6xl font-bold uppercase leading-none tracking-tight sm:text-8xl lg:text-9xl",
-              i % 2 === 0 ? "text-outline" : "text-flame",
+              i % 2 === 0 ? "text-outline" : "text-metal",
             )}
           >
             {word}
