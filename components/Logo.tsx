@@ -9,10 +9,10 @@ import { clsx } from "@/lib/clsx";
 export function LogoMark({ className }: { className?: string }) {
   return (
     <Image
-      src="/images/gravix-mark.png"
+      src="/images/gravix-mark2.png"
       alt="GRAVIX"
-      width={481}
-      height={406}
+      width={493}
+      height={420}
       className={clsx("h-8 w-auto object-contain", className)}
     />
   );
@@ -25,10 +25,10 @@ export function LogoMark({ className }: { className?: string }) {
 export function Logo({ className }: { className?: string }) {
   return (
     <Image
-      src="/images/gravix-logo.png"
+      src="/images/gravix-logo2.png"
       alt="GRAVIX"
-      width={664}
-      height={572}
+      width={679}
+      height={581}
       priority
       className={clsx("h-14 w-auto object-contain", className)}
     />

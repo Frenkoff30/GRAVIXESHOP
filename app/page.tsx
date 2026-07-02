@@ -114,20 +114,20 @@ export default function Home() {
           {/* logo — mobil nahoře, desktop vpravo; jemně se vznáší + zelený dým */}
           <Reveal className="order-1 flex justify-center lg:order-2 lg:col-span-5 lg:justify-end">
             <div className="relative w-[62vw] max-w-[260px] sm:max-w-[360px] lg:max-w-[480px]">
-              {/* zelený dým / mlha — tmavší, tlumený */}
+              {/* šedivý dým / mlha — tmavší, tlumený */}
               <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
-                <span className="animate-fog-breathe absolute inset-[8%] rounded-full bg-volt-deep/40 blur-[65px]" />
-                <span className="animate-smoke-a absolute inset-x-[26%] inset-y-[18%] rounded-full bg-volt-deep/40 blur-[48px]" />
-                <span className="animate-smoke-b absolute inset-x-[34%] inset-y-[22%] rounded-full bg-volt/20 blur-[42px]" />
+                <span className="animate-fog-breathe absolute inset-[8%] rounded-full bg-fog/20 blur-[65px]" />
+                <span className="animate-smoke-a absolute inset-x-[26%] inset-y-[18%] rounded-full bg-fog/25 blur-[48px]" />
+                <span className="animate-smoke-b absolute inset-x-[34%] inset-y-[22%] rounded-full bg-mist/25 blur-[42px]" />
               </div>
               <Image
-                src="/images/gravix-logo.png"
+                src="/images/gravix-logo2.png"
                 alt="GRAVIX"
-                width={664}
-                height={572}
+                width={679}
+                height={581}
                 priority
                 sizes="(max-width: 1024px) 62vw, 480px"
-                className="animate-float-slow relative z-10 w-full object-contain opacity-70 brightness-75 drop-shadow-[0_18px_50px_rgba(0,0,0,0.55)]"
+                className="animate-float-slow relative z-10 w-full object-contain opacity-80 brightness-90 drop-shadow-[0_18px_50px_rgba(0,0,0,0.55)]"
               />
             </div>
           </Reveal>

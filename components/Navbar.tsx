@@ -87,11 +87,11 @@ export function Navbar() {
   return (
     <>
       {/* horní zelený proužek (banner) — normálně odscrolluje pryč */}
-      <div className="bg-volt/20 text-center">
-        <p className="flex items-center justify-center gap-2 px-4 py-1.5 font-display text-[11px] font-semibold uppercase tracking-[0.18em] text-volt-deep sm:text-xs">
+      <div className="bg-volt text-center">
+        <p className="flex items-center justify-center gap-2 px-4 py-1.5 font-display text-[11px] font-semibold uppercase tracking-[0.18em] text-ink sm:text-xs">
           <Truck className="h-3.5 w-3.5" strokeWidth={2} />
           Doprava zdarma od 1 000 Kč
-          <span className="hidden text-volt-deep/50 sm:inline">·</span>
+          <span className="hidden text-ink/40 sm:inline">·</span>
           <span className="hidden sm:inline">Expedice do 24 h</span>
         </p>
       </div>
