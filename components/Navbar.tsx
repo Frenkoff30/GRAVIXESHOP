@@ -10,7 +10,7 @@ import { clsx } from "@/lib/clsx";
 const links = [
   { href: "/produkty", label: "Produkty" },
   { href: "/#kategorie", label: "Kategorie" },
-  { href: "/#znacka", label: "Značka" },
+  { href: "/znacka", label: "Značka" },
   { href: "/#kontakt", label: "Kontakt" },
 ];
 

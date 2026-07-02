@@ -25,12 +25,33 @@ export type Product = {
   shortDescription: string;
   description: string[];
   highlights: string[];
+  /** Návod k použití (kroky). */
+  usage?: string[];
+  /** Upozornění / bezpečnostní pokyny. */
+  warnings?: string[];
+  /** Barevné varianty (jen vizuální výběr). */
+  colors?: string[];
   specs: { label: string; value: string }[];
   inStock: boolean;
   tone: ProductTone;
   /** Cesta k fotce v /public. Vyměň za reálnou produktovou fotku. */
   image: string;
 };
+
+/* Návod + upozornění jsou pro oba shakery společné. */
+const shakerUsage = [
+  "Naplňte shaker požadovaným množstvím vody nebo jiného nápoje.",
+  "Přidejte protein, suplement nebo jinou směs.",
+  "Pevně uzavřete víčko i uzávěr otvoru.",
+  "Důkladně protřepejte po dobu 15–30 sekund.",
+  "Po použití shaker vypláchněte a umyjte.",
+];
+
+const shakerWarnings = [
+  "Před použitím vždy zkontrolujte správné uzavření víčka, aby nedošlo k protečení.",
+  "Nevystavujte vysokým teplotám, pokud výrobek není k tomu určen.",
+  "Pravidelně čistěte, aby nedocházelo k usazování zbytků nápojů a zápachu.",
+];
 
 export const categories: Category[] = [
   {
@@ -48,7 +69,7 @@ export const categories: Category[] = [
 export const products: Product[] = [
   {
     slug: "pro-shaker",
-    image: "/images/shaker.jpg",
+    image: "/images/gravixvelkyshaker.webp",
     name: "GRAVIX Pro Shaker",
     subtitle: "Shaker s nerezovou pružinou",
     category: "shakery",
@@ -67,18 +88,21 @@ export const products: Product[] = [
       "Nerezová míchací pružina",
       "Těsnící víčko proti vylití",
     ],
+    usage: shakerUsage,
+    warnings: shakerWarnings,
+    colors: ["Černá", "Stříbrná"],
     specs: [
       { label: "Objem", value: "700 ml" },
-      { label: "Materiál", value: "PP, bez BPA" },
+      { label: "Materiál", value: "Nerez ocel" },
       { label: "Mytí", value: "Vhodné do myčky" },
-      { label: "Barva", value: "Matná černá" },
+      { label: "Barva", value: "Černá / Stříbrná" },
     ],
     inStock: true,
     tone: "chrome",
   },
   {
     slug: "classic-shaker",
-    image: "/images/shaker.jpg",
+    image: "/images/gravixmalyshaker.webp",
     name: "GRAVIX Classic Shaker",
     subtitle: "Klasický shaker 600 ml",
     category: "shakery",
@@ -87,16 +111,18 @@ export const products: Product[] = [
     rating: 4.8,
     reviews: 96,
     shortDescription:
-      "Jednoduchý a spolehlivý 600ml shaker se sítkem. Skvělý poměr cena/výkon.",
+      "Klasický plastový shaker pro každodenní použití. Lehký, odolný a ideální pro míchání proteinů bez hrudek.",
     description: [
-      "Klasika, která nezklame. GRAVIX Classic Shaker má praktické sítko pro hladké rozmíchání a víčko s bezpečným uzávěrem.",
-      "Lehký, odolný a čitelná stupnice — ideální parťák na každý trénink.",
+      "Klasický plastový shaker pro každodenní použití. Lehký, odolný a ideální pro míchání proteinů bez hrudek.",
+      "Praktické sítko pro hladké rozmíchání, čitelná stupnice a víčko s bezpečným uzávěrem — spolehlivý parťák na každý trénink.",
     ],
     highlights: [
       "Bez BPA",
       "Míchací sítko v ceně",
       "Bezpečný uzávěr proti vylití",
     ],
+    usage: shakerUsage,
+    warnings: shakerWarnings,
     specs: [
       { label: "Objem", value: "600 ml" },
       { label: "Materiál", value: "PP, bez BPA" },
@@ -108,7 +134,7 @@ export const products: Product[] = [
   },
   {
     slug: "nasal-strips",
-    image: "/images/nasal.jpg",
+    image: "/images/gravixnosnipasky.webp",
     name: "GRAVIX Nasal Strips",
     subtitle: "Nosní pásky na dýchání",
     category: "dychani",
@@ -117,15 +143,23 @@ export const products: Product[] = [
     rating: 4.7,
     reviews: 34,
     shortDescription:
-      "Samolepicí nosní pásky, které otevřou nosní dýchací cesty. Víc kyslíku při tréninku i klidnější spánek.",
+      "Nosní pásky pomáhají zlepšit průchodnost nosu jemným rozšířením nosních průchodů. Vhodné pro spánek, sport i každodenní použití. Balení obsahuje 30 kusů.",
     description: [
-      "Když nos nestíhá, trpí výkon. GRAVIX Nasal Strips jemně rozšíří nosní křídla, takže do plic dostaneš víc vzduchu při dřině i během regenerace.",
-      "Pružný materiál drží po celý trénink a po sundání nezanechá zbytky lepidla.",
+      "Nosní pásky pomáhají zlepšit průchodnost nosu jemným rozšířením nosních průchodů. Jsou vhodné pro spánek, sport i každodenní použití. Balení obsahuje 30 kusů.",
+      "Nosní pásky jsou jednoduchým a pohodlným řešením pro lepší dýchání nosem. Po nalepení na nos jemně nadzvedávají nosní křídla, čímž pomáhají zlepšit proudění vzduchu nosními průchody.",
+      "Jsou vhodné při sportovních aktivitách, během spánku nebo kdykoliv, kdy chcete podpořit pohodlnější dýchání nosem. Díky jednoduché aplikaci drží pevně na místě a jejich použití nevyžaduje žádné léky ani složité postupy.",
     ],
     highlights: [
-      "Okamžitě lepší průchodnost nosem",
-      "Drží i při zpocení",
-      "Hypoalergenní lepidlo",
+      "Podpora přirozeného dýchání nosem",
+      "Jednoduché použití",
+      "Pohodlné nošení",
+      "Vhodné pro sport i spánek",
+      "Balení obsahuje 30 nosních pásků",
+    ],
+    usage: [
+      "Očistěte a osušte pokožku nosu.",
+      "Nalepte pásek na střed nosu podle návodu a jemně přitlačte.",
+      "Po použití pásek opatrně odstraňte.",
     ],
     specs: [
       { label: "Balení", value: "30 ks" },

@@ -9,7 +9,7 @@ import { clsx } from "@/lib/clsx";
 export function LogoMark({ className }: { className?: string }) {
   return (
     <Image
-      src="/images/gravix-mark2.png"
+      src="/images/gravix-mark2.webp"
       alt="GRAVIX"
       width={493}
       height={420}
@@ -25,7 +25,7 @@ export function LogoMark({ className }: { className?: string }) {
 export function Logo({ className }: { className?: string }) {
   return (
     <Image
-      src="/images/gravix-logo2.png"
+      src="/images/gravix-logo2.webp"
       alt="GRAVIX"
       width={679}
       height={581}

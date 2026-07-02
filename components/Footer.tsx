@@ -1,8 +1,12 @@
 import Link from "next/link";
-import { Mail } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { IconInstagram } from "@/components/IconInstagram";
 import { categories } from "@/lib/products";
+
+const EMAIL = "gravixstore1@gmail.com";
+const PHONE_DISPLAY = "792 419 532";
+const PHONE_HREF = "tel:+420792419532";
 
 const cols = [
   {
@@ -18,7 +22,7 @@ const cols = [
   {
     title: "Informace",
     links: [
-      { href: "/#znacka", label: "O značce" },
+      { href: "/znacka", label: "O značce" },
       { href: "/#kontakt", label: "Kontakt" },
       { href: "/produkty", label: "Doprava a platba" },
       { href: "/produkty", label: "Reklamace" },
@@ -49,11 +53,18 @@ export function Footer() {
                 <IconInstagram className="h-[18px] w-[18px]" />
               </Link>
               <Link
-                href="mailto:info@gravixstore.cz"
+                href={`mailto:${EMAIL}`}
                 aria-label="Napiš nám e-mail"
                 className="grid h-10 w-10 cursor-pointer place-items-center rounded-full border border-line text-chrome transition-colors duration-200 hover:border-volt hover:text-volt"
               >
                 <Mail className="h-[18px] w-[18px]" strokeWidth={1.75} />
+              </Link>
+              <Link
+                href={PHONE_HREF}
+                aria-label="Zavolej nám"
+                className="grid h-10 w-10 cursor-pointer place-items-center rounded-full border border-line text-chrome transition-colors duration-200 hover:border-volt hover:text-volt"
+              >
+                <Phone className="h-[18px] w-[18px]" strokeWidth={1.75} />
               </Link>
             </div>
           </div>
@@ -87,10 +98,18 @@ export function Footer() {
             <ul className="mt-5 space-y-3 text-sm text-fog">
               <li>
                 <a
-                  href="mailto:info@gravixstore.cz"
+                  href={PHONE_HREF}
                   className="transition-colors duration-200 hover:text-chrome"
                 >
-                  info@gravixstore.cz
+                  {PHONE_DISPLAY}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`mailto:${EMAIL}`}
+                  className="transition-colors duration-200 hover:text-chrome"
+                >
+                  {EMAIL}
                 </a>
               </li>
               <li>

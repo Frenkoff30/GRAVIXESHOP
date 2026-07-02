@@ -18,7 +18,7 @@ export function ProductCard({ product }: { product: Product }) {
       className="group relative flex cursor-pointer flex-col overflow-hidden rounded-2xl border border-line bg-card transition-all duration-300 hover:-translate-y-1 hover:border-volt/45 hover:shadow-[var(--shadow-glow)]"
     >
       {/* visual */}
-      <div className="relative aspect-[4/5] overflow-hidden">
+      <div className="relative aspect-square overflow-hidden">
         <ProductVisual
           tone={product.tone}
           image={product.image}

@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ChevronRight, Check, Truck, ShieldCheck, Undo2 } from "lucide-react";
+import {
+  ChevronRight,
+  Check,
+  Truck,
+  ShieldCheck,
+  Undo2,
+  AlertTriangle,
+} from "lucide-react";
 import {
   getProduct,
   getCategory,
@@ -52,7 +59,11 @@ export default async function ProductDetail({
     <div className="relative">
       <div className="absolute inset-x-0 top-0 h-72 bg-radial-glow" />
 
-      <div className="relative mx-auto max-w-7xl px-5 pt-10 sm:px-8 sm:pt-14">
+      <div
+        className={`relative mx-auto max-w-7xl px-5 pt-10 sm:px-8 sm:pt-14 ${
+          related.length === 0 ? "pb-20 sm:pb-28" : ""
+        }`}
+      >
         {/* breadcrumb */}
         <nav
           className="flex flex-wrap items-center gap-1.5 text-sm text-mist"
@@ -142,7 +153,7 @@ export default async function ProductDetail({
               ))}
             </ul>
 
-            <AddToCart productName={product.name} />
+            <AddToCart productName={product.name} colors={product.colors} />
 
             {/* mini USP row */}
             <div className="mt-8 grid grid-cols-3 gap-3 border-t border-line pt-8">
@@ -176,6 +187,48 @@ export default async function ProductDetail({
                 <p key={i}>{p}</p>
               ))}
             </div>
+
+            {/* návod k použití */}
+            {product.usage && product.usage.length > 0 && (
+              <div className="mt-10">
+                <h3 className="font-display text-lg font-bold uppercase tracking-tight text-chrome">
+                  Návod k použití
+                </h3>
+                <ol className="mt-5 space-y-3.5">
+                  {product.usage.map((step, i) => (
+                    <li key={i} className="flex items-start gap-4">
+                      <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-line-hi bg-card font-display text-sm font-bold text-volt">
+                        {i + 1}
+                      </span>
+                      <span className="pt-0.5 text-base leading-relaxed text-fog">
+                        {step}
+                      </span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            )}
+
+            {/* upozornění */}
+            {product.warnings && product.warnings.length > 0 && (
+              <div className="mt-10 rounded-2xl border border-line bg-card/50 p-6">
+                <h3 className="flex items-center gap-2.5 font-display text-lg font-bold uppercase tracking-tight text-chrome">
+                  <AlertTriangle className="h-5 w-5 text-volt" strokeWidth={2} />
+                  Upozornění
+                </h3>
+                <ul className="mt-4 space-y-2.5">
+                  {product.warnings.map((w, i) => (
+                    <li
+                      key={i}
+                      className="flex items-start gap-3 text-sm leading-relaxed text-fog"
+                    >
+                      <span className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-mist" />
+                      {w}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
 
           <div>
