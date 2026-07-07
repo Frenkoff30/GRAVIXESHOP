@@ -26,15 +26,21 @@ export function ProductCard({ product }: { product: Product }) {
           className="h-full w-full transition-transform duration-500 ease-out group-hover:scale-[1.04]"
         />
 
-        {product.badge && (
-          <span
-            className={clsx(
-              "absolute left-3 top-3 rounded-full px-3 py-1 font-display text-[11px] font-semibold uppercase tracking-[0.16em]",
-              badgeStyles[product.badge],
-            )}
-          >
-            {product.badge}
+        {product.comingSoon ? (
+          <span className="absolute left-3 top-3 rounded-full border border-volt/50 bg-ink/80 px-3 py-1 font-display text-[11px] font-semibold uppercase tracking-[0.16em] text-volt backdrop-blur">
+            Připravujeme
           </span>
+        ) : (
+          product.badge && (
+            <span
+              className={clsx(
+                "absolute left-3 top-3 rounded-full px-3 py-1 font-display text-[11px] font-semibold uppercase tracking-[0.16em]",
+                badgeStyles[product.badge],
+              )}
+            >
+              {product.badge}
+            </span>
+          )
         )}
 
         <span className="absolute right-3 top-3 grid h-9 w-9 translate-y-1 place-items-center rounded-full bg-ink/70 text-chrome opacity-0 backdrop-blur transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">

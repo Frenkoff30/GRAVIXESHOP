@@ -31,11 +31,21 @@ export type Product = {
   warnings?: string[];
   /** Barevné varianty (jen vizuální výběr). */
   colors?: string[];
+  /** Produkt se teprve připravuje — zatím nedostupný k objednání. */
+  comingSoon?: boolean;
   specs: { label: string; value: string }[];
   inStock: boolean;
   tone: ProductTone;
   /** Cesta k fotce v /public. Vyměň za reálnou produktovou fotku. */
   image: string;
+  /** Další fotky pro galerii na detailu (např. předek/zadek/detail). */
+  images?: string[];
+  /** Handle produktu na Shopify (párování live dat z lib/catalog.ts). */
+  shopifyHandle?: string;
+  /** Varianty ze Shopify (id + barva) — doplní catalog, pro košík. */
+  variants?: { id: string; color?: string }[];
+  /** Dostupnost ze Shopify (doplní catalog). */
+  shopifyAvailable?: boolean;
 };
 
 /* Návod + upozornění jsou pro oba shakery společné. */
@@ -61,20 +71,20 @@ export const categories: Category[] = [
   },
   {
     slug: "dychani",
-    name: "Dýchání",
-    tagline: "Víc kyslíku při tréninku i klidnější spánek.",
+    name: "Doplňky",
+    tagline: "Nosní pásky a doplňky pro lepší výkon i regeneraci.",
   },
 ];
 
 export const products: Product[] = [
   {
     slug: "pro-shaker",
+    shopifyHandle: "gravix-pro-shaker",
     image: "/images/gravixvelkyshaker.webp",
     name: "GRAVIX Pro Shaker",
     subtitle: "Shaker s nerezovou pružinou",
     category: "shakery",
     price: 299,
-    badge: "Bestseller",
     rating: 4.9,
     reviews: 187,
     shortDescription:
@@ -91,23 +101,24 @@ export const products: Product[] = [
     usage: shakerUsage,
     warnings: shakerWarnings,
     colors: ["Černá", "Stříbrná"],
+    comingSoon: true,
     specs: [
       { label: "Objem", value: "700 ml" },
       { label: "Materiál", value: "Nerez ocel" },
       { label: "Mytí", value: "Vhodné do myčky" },
       { label: "Barva", value: "Černá / Stříbrná" },
     ],
-    inStock: true,
+    inStock: false,
     tone: "chrome",
   },
   {
     slug: "classic-shaker",
+    shopifyHandle: "gravix-classic-shaker",
     image: "/images/gravixmalyshaker.webp",
     name: "GRAVIX Classic Shaker",
     subtitle: "Klasický shaker 600 ml",
     category: "shakery",
     price: 199,
-    badge: "Bestseller",
     rating: 4.8,
     reviews: 96,
     shortDescription:
@@ -123,18 +134,25 @@ export const products: Product[] = [
     ],
     usage: shakerUsage,
     warnings: shakerWarnings,
+    comingSoon: true,
     specs: [
       { label: "Objem", value: "600 ml" },
       { label: "Materiál", value: "PP, bez BPA" },
       { label: "Mytí", value: "Vhodné do myčky" },
       { label: "Barva", value: "Matná černá" },
     ],
-    inStock: true,
+    inStock: false,
     tone: "steel",
   },
   {
     slug: "nasal-strips",
-    image: "/images/gravixnosnipasky.webp",
+    shopifyHandle: "gravix-nasal-strips",
+    image: "/images/gravixnosnipasky-front.webp",
+    images: [
+      "/images/gravixnosnipasky-front.webp",
+      "/images/gravixnosnipasky-back.webp",
+      "/images/gravixnosnipasky-detail.webp",
+    ],
     name: "GRAVIX Nasal Strips",
     subtitle: "Nosní pásky na dýchání",
     category: "dychani",

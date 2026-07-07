@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Menu, X, ShoppingBag, Search, Truck } from "lucide-react";
+import { Menu, X, Search, Truck } from "lucide-react";
 import { Logo } from "@/components/Logo";
+import { CartButton } from "@/components/cart/CartButton";
 import { clsx } from "@/lib/clsx";
 
 const links = [
@@ -24,7 +25,10 @@ function SearchBar({ className }: { className?: string }) {
       role="search"
       onSubmit={(e) => {
         e.preventDefault();
-        router.push("/produkty");
+        const query = q.trim();
+        router.push(
+          query ? `/produkty?q=${encodeURIComponent(query)}` : "/produkty",
+        );
       }}
       className={clsx("relative", className)}
     >
@@ -131,20 +135,7 @@ export function Navbar() {
 
           {/* košík */}
           <div className="ml-auto flex items-center gap-2">
-            <button
-              type="button"
-              title="Košík (již brzy)"
-              aria-label="Košík"
-              className="relative flex h-11 items-center gap-2 rounded-full border border-zinc-300 bg-white pl-3.5 pr-4 text-zinc-900 transition-colors duration-200 hover:border-zinc-900 hover:bg-zinc-100"
-            >
-              <ShoppingBag className="h-[19px] w-[19px]" strokeWidth={1.9} />
-              <span className="hidden font-display text-sm font-semibold uppercase tracking-[0.12em] lg:inline">
-                Košík
-              </span>
-              <span className="grid h-5 min-w-5 place-items-center rounded-full bg-volt px-1 text-[11px] font-bold leading-none text-ink">
-                0
-              </span>
-            </button>
+            <CartButton />
           </div>
         </nav>
 

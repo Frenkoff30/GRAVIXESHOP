@@ -9,17 +9,14 @@ import {
   Undo2,
   AlertTriangle,
 } from "lucide-react";
-import {
-  getProduct,
-  getCategory,
-  products,
-  productsByCategory,
-  formatPrice,
-} from "@/lib/products";
+import { getProduct, getCategory, products, formatPrice } from "@/lib/products";
+import { getCatalogProduct, catalogByCategory } from "@/lib/catalog";
 import { ProductVisual } from "@/components/ProductVisual";
+import { ProductGallery } from "@/components/ProductGallery";
 import { ProductCard } from "@/components/ProductCard";
 import { Stars } from "@/components/Stars";
 import { AddToCart } from "@/components/AddToCart";
+import { StickyBuyBar } from "@/components/StickyBuyBar";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Reveal } from "@/components/Reveal";
 
@@ -47,11 +44,11 @@ export default async function ProductDetail({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const product = getProduct(slug);
+  const product = await getCatalogProduct(slug);
   if (!product) notFound();
 
   const category = getCategory(product.category);
-  const related = productsByCategory(product.category)
+  const related = (await catalogByCategory(product.category))
     .filter((p) => p.slug !== product.slug)
     .slice(0, 3);
 
@@ -87,12 +84,20 @@ export default async function ProductDetail({
         <div className="mt-8 grid gap-10 lg:grid-cols-2 lg:gap-16">
           {/* visual */}
           <div className="lg:sticky lg:top-24 lg:self-start">
-            <ProductVisual
-              tone={product.tone}
-              image={product.image}
-              label={product.subtitle}
-              className="aspect-square w-full rounded-3xl border border-line"
-            />
+            {product.images && product.images.length > 1 ? (
+              <ProductGallery
+                images={product.images}
+                label={product.subtitle}
+                tone={product.tone}
+              />
+            ) : (
+              <ProductVisual
+                tone={product.tone}
+                image={product.image}
+                label={product.subtitle}
+                className="aspect-square w-full rounded-3xl border border-line"
+              />
+            )}
           </div>
 
           {/* info */}
@@ -132,10 +137,20 @@ export default async function ProductDetail({
 
             <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-line bg-card px-3 py-1 text-sm">
               <span
-                className={`h-2 w-2 rounded-full ${product.inStock ? "bg-emerald-400" : "bg-mist"}`}
+                className={`h-2 w-2 rounded-full ${
+                  product.comingSoon
+                    ? "bg-volt"
+                    : product.inStock
+                      ? "bg-emerald-400"
+                      : "bg-mist"
+                }`}
               />
               <span className="text-fog">
-                {product.inStock ? "Skladem · expedice do 24 h" : "Dočasně vyprodáno"}
+                {product.comingSoon
+                  ? "Připravujeme · brzy v prodeji"
+                  : product.inStock
+                    ? "Skladem · expedice do 24 h"
+                    : "Dočasně vyprodáno"}
               </span>
             </div>
 
@@ -153,7 +168,54 @@ export default async function ProductDetail({
               ))}
             </ul>
 
-            <AddToCart productName={product.name} colors={product.colors} />
+            <div id="buy" className="scroll-mt-28">
+            {product.comingSoon ? (
+              <div className="mt-8 rounded-2xl border border-volt/40 bg-card/50 p-6">
+                <p className="font-display text-lg font-bold uppercase tracking-tight text-chrome">
+                  Připravujeme
+                </p>
+                <p className="mt-2 text-sm leading-relaxed text-fog">
+                  Tento produkt právě dokončujeme a zatím ho není možné objednat.
+                  Chceš dát vědět, jakmile bude skladem? Napiš nám na{" "}
+                  <Link
+                    href="https://www.instagram.com/gravixstore.cz/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold text-chrome underline underline-offset-4 hover:text-white"
+                  >
+                    @gravixstore.cz
+                  </Link>{" "}
+                  nebo na{" "}
+                  <a
+                    href="mailto:gravixstore1@gmail.com"
+                    className="font-semibold text-chrome underline underline-offset-4 hover:text-white"
+                  >
+                    gravixstore1@gmail.com
+                  </a>
+                  .
+                </p>
+              </div>
+            ) : product.variants && product.variants.length > 0 ? (
+              <AddToCart productName={product.name} variants={product.variants} />
+            ) : (
+              <div className="mt-8 rounded-2xl border border-line bg-card/50 p-6">
+                <p className="font-display text-lg font-bold uppercase tracking-tight text-chrome">
+                  Dočasně nedostupné
+                </p>
+                <p className="mt-2 text-sm leading-relaxed text-fog">
+                  Objednávku teď nejde dokončit. Zkus to prosím za chvíli, nebo
+                  nám napiš na{" "}
+                  <a
+                    href="mailto:gravixstore1@gmail.com"
+                    className="font-semibold text-chrome underline underline-offset-4 hover:text-white"
+                  >
+                    gravixstore1@gmail.com
+                  </a>
+                  .
+                </p>
+              </div>
+            )}
+            </div>
 
             {/* mini USP row */}
             <div className="mt-8 grid grid-cols-3 gap-3 border-t border-line pt-8">
@@ -267,6 +329,12 @@ export default async function ProductDetail({
           </div>
         </section>
       )}
+
+      <StickyBuyBar
+        name={product.name.replace("GRAVIX ", "")}
+        price={formatPrice(product.price)}
+        comingSoon={product.comingSoon}
+      />
     </div>
   );
 }

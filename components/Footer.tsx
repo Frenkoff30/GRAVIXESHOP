@@ -24,8 +24,8 @@ const cols = [
     links: [
       { href: "/znacka", label: "O značce" },
       { href: "/#kontakt", label: "Kontakt" },
-      { href: "/produkty", label: "Doprava a platba" },
-      { href: "/produkty", label: "Reklamace" },
+      { href: "/doprava-a-platba", label: "Doprava a platba" },
+      { href: "/reklamace", label: "Reklamace a vrácení" },
     ],
   },
 ];
@@ -129,12 +129,15 @@ export function Footer() {
 
         <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-line pt-8 text-xs text-mist sm:flex-row">
           <p>© {new Date().getFullYear()} GRAVIX. Všechna práva vyhrazena.</p>
-          <p className="flex items-center gap-4">
-            <Link href="/produkty" className="hover:text-fog">
+          <p className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <Link href="/obchodni-podminky" className="hover:text-fog">
               Obchodní podmínky
             </Link>
-            <Link href="/produkty" className="hover:text-fog">
-              Ochrana soukromí
+            <Link href="/ochrana-osobnich-udaju" className="hover:text-fog">
+              Ochrana osobních údajů
+            </Link>
+            <Link href="/cookies" className="hover:text-fog">
+              Cookies
             </Link>
           </p>
         </div>

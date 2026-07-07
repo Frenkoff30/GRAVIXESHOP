@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { SectionHeading } from "@/components/SectionHeading";
 import { ProductsBrowser } from "@/components/ProductsBrowser";
+import { getCatalog } from "@/lib/catalog";
 
 export const metadata: Metadata = {
   title: "Produkty",
@@ -9,7 +10,8 @@ export const metadata: Metadata = {
     "Shakery a nosní pásky GRAVIX. Prémiové fitness vybavení skladem s expedicí do 24 hodin.",
 };
 
-export default function ProduktyPage() {
+export default async function ProduktyPage() {
+  const products = await getCatalog();
   return (
     <div className="relative">
       <div className="absolute inset-x-0 top-0 h-72 bg-radial-glow" />
@@ -20,7 +22,7 @@ export default function ProduktyPage() {
         </SectionHeading>
 
         <Suspense fallback={<div className="mt-10 h-12" />}>
-          <ProductsBrowser />
+          <ProductsBrowser products={products} />
         </Suspense>
       </div>
     </div>

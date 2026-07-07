@@ -4,6 +4,9 @@ import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { ScrollProgress } from "@/components/ScrollProgress";
+import { CookieConsent } from "@/components/CookieConsent";
+import { CartProvider } from "@/components/cart/CartProvider";
+import { CartDrawer } from "@/components/cart/CartDrawer";
 
 const barlow = Barlow({
   variable: "--font-barlow",
@@ -52,6 +55,12 @@ export const metadata: Metadata = {
     locale: "cs_CZ",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "GRAVIX · Vybavení pro tvůj trénink",
+    description:
+      "Prémiové fitness vybavení bez kompromisů. Navrženo pro maximální výkon.",
+  },
 };
 
 export default function RootLayout({
@@ -67,9 +76,13 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-ink text-chrome">
         <div className="grain-overlay" aria-hidden />
         <ScrollProgress />
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <CartProvider>
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+          <CartDrawer />
+        </CartProvider>
+        <CookieConsent />
       </body>
     </html>
   );

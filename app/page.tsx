@@ -8,7 +8,7 @@ import {
   Undo2,
   Headphones,
   Check,
-  Dumbbell,
+  Camera,
 } from "lucide-react";
 import { ButtonLink } from "@/components/Button";
 import { Reveal } from "@/components/Reveal";
@@ -16,24 +16,21 @@ import { Marquee } from "@/components/Marquee";
 import { KineticBand } from "@/components/KineticBand";
 import { SectionHeading } from "@/components/SectionHeading";
 import { ProductVisual } from "@/components/ProductVisual";
-import { LogoMark } from "@/components/Logo";
-import { HeroCarousel } from "@/components/HeroCarousel";
+import { HeroVisual } from "@/components/HeroVisual";
+import { DrawLine } from "@/components/DrawLine";
 import { IconInstagram } from "@/components/IconInstagram";
 import { Stars } from "@/components/Stars";
 import {
-  products,
   categories,
   productsByCategory,
   formatPrice,
 } from "@/lib/products";
+import { getCatalog } from "@/lib/catalog";
 import { clsx } from "@/lib/clsx";
-
-const spotlight =
-  products.find((p) => p.slug === "nasal-strips") ?? products[0];
 
 const catImages: Record<string, string> = {
   shakery: "/images/gravixvelkyshaker.webp",
-  dychani: "/images/gravixnosnipasky.webp",
+  dychani: "/images/gravixnosnipasky-front.webp",
 };
 
 const usps = [
@@ -89,13 +86,14 @@ const marqueeItems = [
   "Navrženo pro výkon",
 ];
 
-export default function Home() {
+export default async function Home() {
+  const catalog = await getCatalog();
+  const spotlight =
+    catalog.find((p) => p.slug === "nasal-strips") ?? catalog[0];
   return (
     <>
-      {/* ============ HERO (slider) ============ */}
-      <HeroCarousel>
-        {/* SLIDE 1 — editorial hero */}
-        <div className="relative flex min-h-[calc(100svh-5.5rem)] flex-col overflow-hidden bg-ink">
+      {/* ============ HERO ============ */}
+      <section className="relative flex min-h-[calc(100svh-5.5rem)] flex-col overflow-hidden bg-ink">
         {/* pozadí: tlumený zelený spotlight vpravo + mřížka + hlubší vignette + spodní fade */}
         <div className="animate-glow-pulse absolute inset-0 bg-[radial-gradient(44%_50%_at_74%_46%,rgba(169,224,52,0.1),transparent_62%)]" />
         <div className="absolute inset-0 bg-grid opacity-[0.1]" />
@@ -111,30 +109,14 @@ export default function Home() {
             </span>
             <span className="tech-label text-mist">EST. 2026</span>
           </div>
+          {/* volt linka, co se při načtení „nakreslí" */}
+          <DrawLine className="absolute inset-x-0 bottom-0" delay={0.3} />
         </div>
 
         {/* main — asymetrický 12-col grid */}
         <div className="relative z-10 mx-auto grid w-full max-w-7xl flex-1 grid-cols-1 items-center gap-10 px-5 py-14 sm:px-8 lg:grid-cols-12 lg:gap-6">
-          {/* logo — mobil nahoře, desktop vpravo; jemně se vznáší + zelený dým */}
-          <Reveal className="order-1 flex justify-center lg:order-2 lg:col-span-5 lg:justify-end">
-            <div className="relative w-[62vw] max-w-[260px] sm:max-w-[360px] lg:max-w-[480px]">
-              {/* šedivý dým / mlha — tmavší, tlumený */}
-              <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
-                <span className="animate-fog-breathe absolute inset-[8%] rounded-full bg-fog/20 blur-[65px]" />
-                <span className="animate-smoke-a absolute inset-x-[26%] inset-y-[18%] rounded-full bg-fog/25 blur-[48px]" />
-                <span className="animate-smoke-b absolute inset-x-[34%] inset-y-[22%] rounded-full bg-mist/25 blur-[42px]" />
-              </div>
-              <Image
-                src="/images/gravix-logo2.webp"
-                alt="GRAVIX"
-                width={679}
-                height={581}
-                priority
-                sizes="(max-width: 1024px) 62vw, 480px"
-                className="animate-float-slow relative z-10 w-full object-contain opacity-80 brightness-90 drop-shadow-[0_18px_50px_rgba(0,0,0,0.55)]"
-              />
-            </div>
-          </Reveal>
+          {/* logo — mobil nahoře, desktop vpravo; parallax + vznášení + zelený dým */}
+          <HeroVisual />
 
           {/* type blok */}
           <div className="order-2 text-center lg:order-1 lg:col-span-7 lg:text-left">
@@ -179,89 +161,7 @@ export default function Home() {
             </Reveal>
           </div>
         </div>
-        </div>
-
-        {/* SLIDE 2 — promo postavené nativně (ostré + responzivní, podle banneru) */}
-        <div className="relative flex min-h-[calc(100svh-5.5rem)] flex-col overflow-hidden bg-ink">
-          {/* pozadí */}
-          <div className="absolute inset-0 bg-grid opacity-[0.1]" />
-          <div className="absolute inset-0 bg-[radial-gradient(58%_60%_at_78%_48%,rgba(169,224,52,0.12),transparent_64%)]" />
-          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-ink to-transparent" />
-
-          <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col px-5 py-8 sm:px-8 sm:py-10">
-            {/* horní lišta: brand + BUILT FOR STRENGTH + benefity */}
-            <div className="flex flex-col gap-5 border-b border-line/70 pb-6 lg:flex-row lg:items-center lg:justify-between">
-              <div className="flex items-center justify-center gap-4 lg:justify-start">
-                <LogoMark className="h-9 w-9" />
-                <span className="rounded-md border border-volt/60 px-3 py-1.5 font-display text-xs font-bold uppercase tracking-[0.2em] text-volt sm:text-sm">
-                  Built for strength
-                </span>
-              </div>
-              <ul className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 lg:justify-end">
-                {[
-                  { icon: Dumbbell, t: "Ověřená kvalita" },
-                  { icon: ShieldCheck, t: "Prověřeno v tréninku" },
-                  { icon: Truck, t: "Rychlé dodání" },
-                ].map((b) => (
-                  <li key={b.t} className="flex items-center gap-2 text-fog">
-                    <b.icon className="h-5 w-5 text-volt" strokeWidth={1.75} />
-                    <span className="font-display text-xs font-semibold uppercase tracking-[0.14em] sm:text-sm">
-                      {b.t}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* hlavní obsah */}
-            <div className="grid flex-1 items-center gap-8 py-8 lg:grid-cols-2 lg:gap-6 lg:py-10">
-              {/* text */}
-              <div className="order-2 text-center lg:order-1 lg:text-left">
-                <div className="inline-block rounded-2xl border border-volt/60 px-6 py-4 sm:px-8 sm:py-5">
-                  <h2 className="font-display font-bold uppercase leading-[0.88] tracking-tight text-[clamp(2.5rem,6vw,4.75rem)]">
-                    <span className="text-metal">Nasal strips</span>
-                    <br />
-                    <span className="text-flame">&amp; shaker.</span>
-                  </h2>
-                </div>
-                <p className="mx-auto mt-7 max-w-md text-lg leading-relaxed text-chrome lg:mx-0">
-                  Vybavení, na které se můžeš spolehnout.
-                </p>
-                <p className="mx-auto mt-1.5 max-w-md text-base text-mist lg:mx-0">
-                  Další produkty už brzy · more products coming soon
-                </p>
-                <div className="mt-8 flex justify-center lg:justify-start">
-                  <ButtonLink href="/produkty" size="lg">
-                    Prozkoumat produkty
-                    <ArrowRight className="h-5 w-5" strokeWidth={2} />
-                  </ButtonLink>
-                </div>
-              </div>
-
-              {/* produkty */}
-              <div className="order-1 flex items-end justify-center gap-4 sm:gap-8 lg:order-2">
-                <Image
-                  src="/images/gravixnosnipasky.webp"
-                  alt="GRAVIX Nasal Strips"
-                  width={1024}
-                  height={1536}
-                  sizes="(max-width: 1024px) 32vw, 220px"
-                  className="w-28 object-contain drop-shadow-[0_20px_45px_rgba(0,0,0,0.6)] sm:w-40 lg:w-52"
-                />
-                <Image
-                  src="/images/gravixvelkyshaker.webp"
-                  alt="GRAVIX Shaker"
-                  width={1024}
-                  height={1536}
-                  priority
-                  sizes="(max-width: 1024px) 44vw, 300px"
-                  className="w-40 object-contain drop-shadow-[0_20px_45px_rgba(0,0,0,0.6)] sm:w-56 lg:w-72"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </HeroCarousel>
+      </section>
 
       {/* ============ MARQUEE ============ */}
       <Marquee items={marqueeItems} />
@@ -349,7 +249,7 @@ export default function Home() {
           <div className="group relative min-h-[18rem] overflow-hidden lg:min-h-[28rem]">
             <ProductVisual
               tone={spotlight.tone}
-              image={spotlight.image}
+              image="/images/gravixnosnipasky.webp"
               variant="spotlight"
               className="h-full w-full"
             />
@@ -462,45 +362,22 @@ export default function Home() {
           </Reveal>
         </div>
 
-        {/* editorial bento galerie */}
-        <div className="relative mx-auto mt-14 grid max-w-7xl grid-cols-2 gap-3 px-5 sm:px-8 lg:h-[560px] lg:grid-cols-3 lg:grid-rows-2">
-          {[
-            {
-              src: "/images/grip-straps.webp",
-              alt: "Úchop činky",
-              label: "Grip & tah",
-              cls: "col-span-2 lg:col-span-2 lg:row-span-2 aspect-[4/3] lg:aspect-auto",
-            },
-            {
-              src: "/images/pullup-bw.webp",
-              alt: "Shyby",
-              label: "Kalistenika",
-              cls: "aspect-[4/5] lg:aspect-auto",
-            },
-            {
-              src: "/images/dumbbell-grip.webp",
-              alt: "Trénink s jednoručkami",
-              label: "Jednoručky",
-              cls: "aspect-[4/5] lg:aspect-auto",
-            },
-          ].map((img, i) => (
-            <Reveal key={img.src} delay={i * 0.1} className={img.cls}>
-              <div className="group relative h-full w-full overflow-hidden rounded-2xl border border-line transition-colors duration-300 hover:border-volt/60">
-                <Image
-                  src={img.src}
-                  alt={img.alt}
-                  fill
-                  sizes="(max-width: 1024px) 50vw, 33vw"
-                  className="object-cover photo-grade reveal-color transition-transform duration-700 ease-out group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-ink/75 via-transparent to-transparent" />
-                <span className="absolute bottom-4 left-4 flex items-center gap-2 font-display text-sm font-semibold uppercase tracking-[0.16em] text-chrome">
-                  <span className="h-1.5 w-1.5 rounded-full bg-volt shadow-[0_0_8px_var(--color-volt)]" />
-                  {img.label}
-                </span>
-              </div>
-            </Reveal>
-          ))}
+        {/* galerie — fotky teprve doplníme, zatím prázdný stav */}
+        <div className="relative mx-auto mt-14 max-w-7xl px-5 sm:px-8">
+          <Reveal>
+            <div className="flex min-h-[16rem] flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-line-hi bg-card/30 p-12 text-center sm:min-h-[20rem]">
+              <span className="grid h-14 w-14 place-items-center rounded-full border border-line bg-ink/60 text-mist">
+                <Camera className="h-6 w-6" strokeWidth={1.75} />
+              </span>
+              <p className="font-display text-xl font-bold uppercase tracking-tight text-chrome">
+                Fotky brzy doplníme
+              </p>
+              <p className="max-w-md text-sm leading-relaxed text-fog">
+                Připravujeme galerii z reálného tréninku a produktů. Sleduj nás
+                na Instagramu, ať ti nic neunikne.
+              </p>
+            </div>
+          </Reveal>
         </div>
 
         <div className="relative flex justify-center px-5 py-16">

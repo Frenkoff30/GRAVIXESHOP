@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Minus, Plus, ShoppingBag, Check } from "lucide-react";
-import Link from "next/link";
-import { IconInstagram } from "@/components/IconInstagram";
+import { Minus, Plus, ShoppingBag, Check, Loader2 } from "lucide-react";
+import { useCart } from "@/components/cart/CartProvider";
 import { clsx } from "@/lib/clsx";
 
 /** Vizuální vzorník barev (jen náhled kovu/plastu za názvem varianty). */
@@ -15,19 +14,42 @@ const swatches: Record<string, string> = {
 
 export function AddToCart({
   productName,
-  colors,
+  variants,
 }: {
   productName: string;
-  colors?: string[];
+  variants: { id: string; color?: string }[];
 }) {
+  const { addItem } = useCart();
+  const colors = variants
+    .map((v) => v.color)
+    .filter((c): c is string => Boolean(c));
+
   const [qty, setQty] = useState(1);
+  const [color, setColor] = useState(colors[0] ?? "");
+  const [adding, setAdding] = useState(false);
   const [added, setAdded] = useState(false);
-  const [color, setColor] = useState(colors?.[0] ?? "");
+
+  const selectedVariant =
+    colors.length > 0
+      ? (variants.find((v) => v.color === color) ?? variants[0])
+      : variants[0];
+
+  const add = async () => {
+    setAdding(true);
+    try {
+      await addItem(selectedVariant.id, qty);
+      setQty(1);
+      setAdded(true);
+      setTimeout(() => setAdded(false), 1800);
+    } finally {
+      setAdding(false);
+    }
+  };
 
   return (
     <div className="mt-8">
       {/* výběr barvy */}
-      {colors && colors.length > 0 && (
+      {colors.length > 0 && (
         <div className="mb-6">
           <div className="flex items-center gap-2">
             <span className="font-display text-sm font-semibold uppercase tracking-[0.16em] text-chrome">
@@ -78,7 +100,7 @@ export function AddToCart({
             onClick={() => setQty((q) => Math.max(1, q - 1))}
             aria-label="Ubrat kus"
             className="grid h-14 w-14 cursor-pointer place-items-center text-fog transition-colors hover:text-chrome disabled:opacity-40"
-            disabled={qty <= 1}
+            disabled={qty <= 1 || adding}
           >
             <Minus className="h-4 w-4" strokeWidth={2} />
           </button>
@@ -89,19 +111,27 @@ export function AddToCart({
             type="button"
             onClick={() => setQty((q) => Math.min(10, q + 1))}
             aria-label="Přidat kus"
-            className="grid h-14 w-14 cursor-pointer place-items-center text-fog transition-colors hover:text-chrome"
+            className="grid h-14 w-14 cursor-pointer place-items-center text-fog transition-colors hover:text-chrome disabled:opacity-40"
+            disabled={adding}
           >
             <Plus className="h-4 w-4" strokeWidth={2} />
           </button>
         </div>
 
-        {/* add button */}
+        {/* přidat do košíku */}
         <button
           type="button"
-          onClick={() => setAdded(true)}
-          className="inline-flex h-14 flex-1 cursor-pointer items-center justify-center gap-2.5 rounded-full bg-volt px-8 font-display text-base font-semibold uppercase tracking-[0.16em] text-ink transition-all duration-200 hover:bg-volt-bright hover:shadow-[var(--shadow-volt)]"
+          onClick={add}
+          disabled={adding}
+          aria-label={`Přidat ${productName.replace("GRAVIX ", "")} do košíku`}
+          className="inline-flex h-14 flex-1 cursor-pointer items-center justify-center gap-2.5 rounded-full bg-volt px-8 font-display text-base font-semibold uppercase tracking-[0.16em] text-ink transition-all duration-200 hover:bg-volt-bright hover:shadow-[var(--shadow-volt)] disabled:cursor-wait disabled:opacity-80"
         >
-          {added ? (
+          {adding ? (
+            <>
+              <Loader2 className="h-5 w-5 animate-spin" strokeWidth={2.5} />
+              Přidávám…
+            </>
+          ) : added ? (
             <>
               <Check className="h-5 w-5" strokeWidth={2.5} />
               Přidáno
@@ -115,29 +145,9 @@ export function AddToCart({
         </button>
       </div>
 
-      {/* v1 notice — košík zatím není funkční */}
-      {added && (
-        <div className="mt-4 flex items-start gap-3 rounded-xl border border-line bg-surface p-4 text-sm text-fog">
-          <IconInstagram className="mt-0.5 h-5 w-5 shrink-0 text-chrome" />
-          <p>
-            Online košík právě dolaďujeme. Pro objednání{" "}
-            <span className="font-semibold text-chrome">
-              {productName}
-              {color ? ` (${color})` : ""}
-            </span>{" "}
-            nám zatím napiš na{" "}
-            <Link
-              href="https://www.instagram.com/gravixstore.cz/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-semibold text-chrome underline underline-offset-4 hover:text-white"
-            >
-              @gravixstore.cz
-            </Link>{" "}
-            a ozveme se hned.
-          </p>
-        </div>
-      )}
+      <p className="mt-4 text-xs text-mist">
+        Přidáním do košíku nic neplatíš — objednávku dokončíš až na pokladně.
+      </p>
     </div>
   );
 }
