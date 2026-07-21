@@ -20,9 +20,9 @@ export default function GdprPage() {
       <h2>1. Správce údajů</h2>
       <p>
         Správcem osobních údajů je provozovatel e-shopu GRAVIX,{" "}
-        <strong>[jméno / firma provozovatele]</strong>, IČO{" "}
-        <strong>[doplnit IČO]</strong>, se sídlem{" "}
-        <strong>[doplnit adresu]</strong>. Kontakt:{" "}
+        <strong>Aleš Picek</strong>, IČO{" "}
+        <strong>08779007</strong>, se sídlem{" "}
+        <strong>Hamry 36, 539 01 Hamry, Česko</strong>. Kontakt:{" "}
         <a href="mailto:gravixstore1@gmail.com">gravixstore1@gmail.com</a>, tel.{" "}
         <a href="tel:+420792419532">792 419 532</a>.
       </p>
